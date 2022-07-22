@@ -25,6 +25,7 @@ export class MessageService {
   }
 }
 
+// https://docs.feathersjs.com/guides/basics/hooks.html
 export const MessageHooks = {
   before: {
     create: [

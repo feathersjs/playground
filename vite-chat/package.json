@@ -1,0 +1,69 @@
+{
+  "name": "feathers-vite-chat",
+  "description": "A FeathersJS real-time chat application written in TypeScript",
+  "version": "1.0.0",
+  "type": "module",
+  "homepage": "",
+  "main": "src",
+  "keywords": [
+    "feathers"
+  ],
+  "author": {
+    "name": "David Luecke",
+    "email": "daff@neyeon.com"
+  },
+  "contributors": [],
+  "bugs": {},
+  "directories": {
+    "lib": "src",
+    "test": "test/",
+    "config": "config/"
+  },
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7"
+  },
+  "scripts": {
+    "dev": "vite",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "build:client": "vite build --outDir dist/client",
+    "build:server": "vite build --outDir dist/server --ssr src/app.ts ",
+    "update": "npx npm-check-updates -u"
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "pre",
+    "@feathersjs/authentication-local": "pre",
+    "@feathersjs/authentication-oauth": "pre",
+    "@feathersjs/client": "pre",
+    "@feathersjs/configuration": "pre",
+    "@feathersjs/errors": "pre",
+    "@feathersjs/express": "pre",
+    "@feathersjs/feathers": "pre",
+    "@feathersjs/schema": "pre",
+    "@feathersjs/socketio": "pre",
+    "@seald-io/nedb": "^3.0.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "feathers-nedb": "^6.0.0",
+    "helmet": "^5.1.0",
+    "socket.io-client": "^4.5.1",
+    "winston": "^3.8.1"
+  },
+  "devDependencies": {
+    "@feathersjs/cli": "pre",
+    "@types/compression": "^1.7.2",
+    "@types/cors": "^2.8.12",
+    "@types/jsonwebtoken": "^8.5.8",
+    "feathers-vite": "^0.10.3",
+    "node-fetch": "^3.2.9",
+    "typescript": "^4.7.4",
+    "vite": "^3.0.2",
+    "vitest": "^0.18.1"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  }
+}

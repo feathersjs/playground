@@ -1,7 +1,6 @@
 {
-  "name": "feathers-playground",
-  "version": "0.0.0",
-  "private": true,
+  "name": "feathers-playground-starter",
+  "version": "1.0.0",
   "dependencies": {
     "@feathersjs/express": "^4",
     "@feathersjs/feathers": "^4",

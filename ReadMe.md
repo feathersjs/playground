@@ -9,6 +9,10 @@ For generating customized projects with databases, testing and authentication se
 
 ## Project index
 
-### Starter
+### [Starter](https://stackblitz.com/fork/github/feathersjs/playground/tree/main/starter)
 
 The project on the StackBlitz "Create a New Project" page.
+
+### [Vite Chat](https://stackblitz.com/fork/github/feathersjs/playground/tree/main/vite-chat)
+
+Feathers Chat demo app with vite client tooling. 
