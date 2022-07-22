@@ -63,7 +63,7 @@ const chatHTML = `<main class="flex flex-column">
   <header class="title-bar flex flex-row flex-center">
     <div class="title-wrapper block center-element">
       <img class="logo" src="https://feathersjs.com/img/feathers-logo-wide.png"
-        alt="Feathers Logo">
+        alt="Feathers">
       <span class="title">Vite Chat</span>
     </div>
   </header>
@@ -100,7 +100,7 @@ const addUser = (user: UserData) => {
   const userList = document.querySelector('.user-list') as HTMLDivElement
   userList.innerHTML += `<li>
     <a class="block relative" href="#">
-      <img src="${user.avatar}" alt="" class="avatar">
+      <img src="${user.avatar}" alt="" class="avatar" crossorigin="anonymous">
       <span class="absolute username">${escape(user.name || user.email)}</span>
     </a>
   </li>`
@@ -125,7 +125,7 @@ const addMessage = (message: MessageData) => {
 
   if (chat) {
     chat.innerHTML += `<div class="message flex flex-row">
-      <img src="${user.avatar}" alt="${user.name || user.email}" class="avatar">
+      <img src="${user.avatar}" alt="${user.name || user.email}" class="avatar" crossorigin="anonymous">
       <div class="message-wrapper">
         <p class="message-header">
           <span class="username font-600">${escape(
