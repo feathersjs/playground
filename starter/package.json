@@ -1,17 +1,29 @@
 {
   "name": "feathers-playground-starter",
   "version": "1.0.0",
+  "description": "The project on the StackBlitz's “Create a New Project” page.",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
   "dependencies": {
     "@feathersjs/express": "^4",
     "@feathersjs/feathers": "^4",
     "@feathersjs/socketio": "^4"
   },
-  "scripts": {
-    "start": "node app"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feathersjs/playground.git",
+    "directory": "starter"
   },
   "type": "module",
   "prettier": {
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "devDependencies": {
+    "@feathersjs/client": "^4.5.15",
+    "nodemon": "^2.0.19"
   }
 }

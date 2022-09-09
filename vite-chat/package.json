@@ -5,15 +5,14 @@
   "type": "module",
   "homepage": "",
   "main": "src",
-  "keywords": [
-    "feathers"
-  ],
+  "keywords": ["feathers"],
   "author": {
     "name": "David Luecke",
     "email": "daff@neyeon.com"
   },
   "contributors": [],
   "bugs": {},
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/feathersjs/playground.git",
@@ -68,6 +67,7 @@
   },
   "prettier": {
     "semi": false,
-    "singleQuote": true
+    "singleQuote": true,
+    "trailingComma": "none"
   }
 }
