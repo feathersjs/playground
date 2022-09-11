@@ -13,7 +13,7 @@ const listenGlobal = globalThis as any
 
 // A function that creates messages and then logs
 // all existing messages on the service
-export const boot = async () => {
+export const bootServer = async () => {
   const server = listenGlobal.FeathersServer as any
   if (server === undefined || server.close()) {
     listenGlobal.FeathersServer = await app.listen(port)
@@ -23,4 +23,9 @@ export const boot = async () => {
       port
     )
   }
+}
+
+// Bootstrap
+if (import.meta?.url?.endsWith(process.argv[1])) {
+  await bootServer()
 }

@@ -3,7 +3,8 @@ import helmet from 'helmet'
 
 import { feathers } from '@feathersjs/feathers'
 import configuration from '@feathersjs/configuration'
-import express, {
+import {
+  default as express,
   json,
   urlencoded,
   static as staticFiles,
@@ -13,13 +14,13 @@ import express, {
 } from '@feathersjs/express'
 import socketio from '@feathersjs/socketio'
 
-import { Application } from './declarations'
-import logger from './logger'
-import middleware from './middleware'
-import { services } from './services'
-import appHooks from './app.hooks'
-import channels from './channels'
-import authentication from './authentication'
+import { Application } from '#src/declarations.js'
+import logger from '#src/logger.js'
+import middleware from '#src/middleware/index.js'
+import { services } from '#src/services/index.js'
+import appHooks from '#src/app.hooks.js'
+import channels from '#src/channels.js'
+import authentication from '#src/authentication.js'
 // Don't remove this comment. It's needed to format import lines nicely.
 
 const app: Application = express(feathers())
@@ -37,18 +38,21 @@ app.use(compress())
 app.use(json())
 app.use(urlencoded({ extended: true }))
 
-app.use('/', (req, res, next) => {
-  if (req.path === '/') {
-    res.send(`<html lang="en">
-      Hello there, You seem to be lost...<br>
-      Perhaps you have the wrong port?<br><br>
-      NODE_ENV: ${process.env.NODE_ENV}
-    `)
-  } else {
-    next()
-  }
-})
-// app.use('/', staticFiles(app.get('public')))
+if (process.env.NODE_ENV === 'production') {
+  app.use('/', staticFiles(app.get('dist')))
+} else {
+  app.use('/', (req, res, next) => {
+    if (req.path === '/') {
+      res.send(`<html lang="en">
+        Hello there, You seem to be lost...<br>
+        Perhaps you have the wrong port?<br><br>
+        NODE_ENV: ${process.env.NODE_ENV}
+      `)
+    } else {
+      next()
+    }
+  })
+}
 
 // Set up Plugins and providers
 app.configure(rest())

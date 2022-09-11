@@ -1,7 +1,7 @@
 // Application hooks that run for every service
 // Don't remove this comment. It's needed to format import lines nicely.
 
-import { HookContext } from './declarations'
+import { HookContext } from '#src/declarations.js'
 
 const createdAt = (ctx: any) => {
   const items = Array.isArray(ctx.data) ? ctx.data : [ctx.data]
@@ -35,7 +35,12 @@ export default {
   error: {
     all: [
       (context: HookContext) => {
-        console.error(context.error)
+        const qwell = ['not-authenticated', 'not-found']
+        if (!qwell.includes(context.error.className)) {
+          console.error(context.error)
+        } else {
+          console.log(context.error.message)
+        }
       }
     ],
     find: [],

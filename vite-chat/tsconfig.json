@@ -3,17 +3,15 @@
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
-    "lib": ["ESNext", "DOM"],
-    "moduleResolution": "node",
+    "moduleResolution": "Node16",
     "strict": true,
+    "jsx": "preserve",
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true
   },
   "include": ["client.ts", "src/schema/**/*"],
   "references": [{ "path": "./tsconfig.node.json" }]

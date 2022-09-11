@@ -7,7 +7,7 @@ const append = () => (ctx: any) => {
   if (typeof ctx.data.text === 'string') {
     // Multi mode allows arrays
     const suffix = L[(L.length * Math.random()) | 0]
-    ctx.data.text = ctx.data.text + ', ' + suffix
+    ctx.data.text = ctx.data.text + ', - ' + suffix
   }
   return ctx
 }

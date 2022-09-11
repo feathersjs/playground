@@ -1,39 +1,41 @@
 import crypto from 'crypto'
-import { resolve, querySyntax, Infer } from '@feathersjs/schema'
-import { schema } from '../schema-pr-2702'
+import { resolve, querySyntax, Infer, schema, Ajv } from '@feathersjs/schema'
 
 import { HookContext } from '../declarations'
 import { LocalStrategy } from '@feathersjs/authentication-local/lib'
-
+const ajv = new Ajv()
 // The Gravatar image service
 const gravatarUrl = 'https://s.gravatar.com/avatar'
 // The size query. Our chat needs 60px images
 const query = 's=60'
 
 // Schema and resolver for the basic data model (e.g. creating new entries)
-export const userDataSchema = schema({
-  $id: 'UserData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['email', 'password'],
-  properties: {
-    createdAt: {
-      type: 'string',
-    },
-    email: {
-      type: 'string',
-    },
-    password: {
-      type: 'string',
-    },
-    avatar: {
-      type: 'string',
-    },
-    githubId: {
-      type: 'string',
-    },
-  },
-} as const)
+export const userDataSchema = schema(
+  {
+    $id: 'UserData',
+    type: 'object',
+    additionalProperties: false,
+    required: ['email', 'password'],
+    properties: {
+      createdAt: {
+        type: 'string'
+      },
+      email: {
+        type: 'string'
+      },
+      password: {
+        type: 'string'
+      },
+      avatar: {
+        type: 'string'
+      },
+      githubId: {
+        type: 'string'
+      }
+    }
+  } as const,
+  ajv
+)
 
 export type UserData = Infer<typeof userDataSchema>
 
@@ -55,73 +57,82 @@ export const userDataResolver = resolve<UserData, HookContext>({
       const localStrategy = authService.getStrategy('local') as LocalStrategy
 
       return localStrategy.hashPassword(value as string, context.params)
-    },
-  },
+    }
+  }
 })
 
 // Schema and resolver for making partial updates
-export const userPatchSchema = schema({
-  $id: 'UserPatch',
-  type: 'object',
-  additionalProperties: false,
-  required: [],
-  properties: {
-    ...userDataSchema.properties,
-  },
-} as const)
+export const userPatchSchema = schema(
+  {
+    $id: 'UserPatch',
+    type: 'object',
+    additionalProperties: false,
+    required: [],
+    properties: {
+      ...userDataSchema.properties
+    }
+  } as const,
+  ajv
+)
 
 export type UserPatch = Infer<typeof userPatchSchema>
 
 export const userPatchResolver = resolve<UserPatch, HookContext>({
   schema: userPatchSchema,
   validate: 'before',
-  properties: {},
+  properties: {}
 })
 
 // Schema and resolver for the data that is being returned
-export const userResultSchema = schema({
-  $id: 'UserResult',
-  type: 'object',
-  additionalProperties: false,
-  required: [...userDataSchema.required, '_id'],
-  properties: {
-    ...userDataSchema.definition.properties,
-    _id: {
-      type: 'string',
-    },
-  },
-} as const)
+export const userResultSchema = schema(
+  {
+    $id: 'UserResult',
+    type: 'object',
+    additionalProperties: false,
+    required: [...userDataSchema.required, '_id'],
+    properties: {
+      ...userDataSchema.definition.properties,
+      _id: {
+        type: 'string'
+      }
+    }
+  } as const,
+  ajv
+)
 
 export type UserResult = Infer<typeof userResultSchema>
 
 export const userResultResolver = resolve<UserResult, HookContext>({
   schema: userResultSchema,
   validate: false,
-  properties: {},
+  properties: {}
 })
 
 export const userDispatchResolver = resolve<UserResult, HookContext>({
   properties: {
-    password: async () => undefined,
-  },
+    password: async () => undefined
+  }
 })
 
 // Schema and resolver for allowed query properties
-export const userQuerySchema = schema({
-  $id: 'UserQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(userResultSchema.properties),
-  },
-} as const)
+export const userQuerySchema = schema(
+  {
+    $id: 'UserQuery',
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      ...querySyntax(userResultSchema.properties)
+    }
+  } as const,
+  ajv
+)
 
 export type UserQuery = Infer<typeof userQuerySchema>
 
 export const userQueryResolver = resolve<UserQuery, HookContext>({
   schema: userQuerySchema,
   validate: 'before',
-  properties: {},
+  properties: {}
 })
 
 // Export all resolvers in a format that can be used with the resolveAll hook
@@ -131,7 +142,7 @@ export const userResolvers = {
   data: {
     create: userDataResolver,
     patch: userPatchResolver,
-    update: userDataResolver,
+    update: userDataResolver
   },
-  query: userQueryResolver,
+  query: userQueryResolver
 }

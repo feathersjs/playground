@@ -1,12 +1,10 @@
 {
-  "ts-node": {
-    "files": true
-  },
   "compilerOptions": {
     "composite": true,
     "module": "esnext",
     "moduleResolution": "Node16",
-    "esModuleInterop": true
+    "allowSyntheticDefaultImports": true,
+    "removeComments": false // Remove if comfortable with TypeScript
   },
   "include": ["src/**/*", "test/**/*", "vite.config.ts"]
 }

@@ -1,16 +1,15 @@
 /// <reference types="vitest" />
-
-// vite.config.ts
-// https://vitejs.dev/config/
 import { defineConfig } from 'vite'
-import app from './src/app'
-import feathers from 'feathers-vite'
+import { spawn } from 'node:child_process'
+
+if (process.env.SKIP_SERVER !== 'true') {
+  spawn('npm', ['run', 'dev:server'], { stdio: 'inherit' })
+}
 
 // https://vitejs.dev/config/#async-config
-export default defineConfig(async () => {
-  // const app = await import('./src/app.js')
+export default defineConfig(async ({ command }) => {
   return {
-    plugins: [feathers({ app })],
+    plugins: [],
     build: { target: 'esnext' }
   }
 })

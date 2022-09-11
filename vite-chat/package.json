@@ -2,22 +2,29 @@
   "name": "feathers-vite-chat",
   "description": "A FeathersJS real-time chat application written in TypeScript",
   "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "dev:client": "SKIP_SERVER=true vite",
+    "dev:server": "tsx watch --clear-screen=false src/index.ts",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "build": "vite build --outDir dist/client",
+    "start": "tsx src/index.ts",
+    "update": "npx npm-check-updates -u",
+    "i": "ls node_modules &> /dev/null || npm i"
+  },
   "type": "module",
   "homepage": "",
   "main": "src",
-  "keywords": ["feathers"],
+  "keywords": [
+    "feathers"
+  ],
   "author": {
     "name": "David Luecke",
     "email": "daff@neyeon.com"
   },
   "contributors": [],
   "bugs": {},
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/feathersjs/playground.git",
-    "directory": "vite-chat"
-  },
   "directories": {
     "lib": "src",
     "test": "test/",
@@ -27,13 +34,8 @@
     "node": ">= 16",
     "npm": ">= 7"
   },
-  "scripts": {
-    "dev": "vite",
-    "preview": "vite preview",
-    "test": "vitest run",
-    "build:client": "vite build --outDir dist/client",
-    "build:server": "vite build --outDir dist/server --ssr src/app.ts ",
-    "update": "npx npm-check-updates -u"
+  "imports": {
+    "#src/*": "./src/*"
   },
   "dependencies": {
     "@feathersjs/authentication": "pre",
@@ -51,19 +53,23 @@
     "cors": "^2.8.5",
     "feathers-nedb": "^6.0.0",
     "helmet": "^5.1.0",
-    "socket.io-client": "^4.5.1",
-    "winston": "^3.8.1"
+    "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
     "@feathersjs/cli": "pre",
     "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.8",
-    "feathers-vite": "^0.10.3",
+    "isomorphic-git": "^1.19.1",
     "node-fetch": "^3.2.9",
-    "typescript": "^4.7.4",
+    "tsx": "^3.9.0",
+    "typescript": "^4.8.3",
     "vite": "^3.0.2",
     "vitest": "^0.18.1"
+  },
+  "stackblitz": {
+    "installDependencies": false,
+    "startCommand": "npm run i && npm run dev"
   },
   "prettier": {
     "semi": false,

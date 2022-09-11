@@ -1,17 +1,18 @@
 import {
   default as feathers,
   socketio,
-  authentication,
+  authentication
 } from '@feathersjs/client'
 import io from 'socket.io-client'
-import type { MessageData } from './src/schema/messages.schema'
-import type { UserData } from './src/schema/users.schema'
+import type { MessageData } from '#src/schema/messages.schema.js'
+import type { UserData } from '#src/schema/users.schema.js'
 
 // Establish a Socket.io connection
 const socket = io(
   window.location.origin.replace(/--\d*\.local/, '--9000.local'),
   {
     transports: ['websocket'],
+    reconnectionDelay: import.meta.env.DEV ? 60 : 1000
   }
 )
 // Initialize our Feathers client application through Socket.io
@@ -125,7 +126,9 @@ const addMessage = (message: MessageData) => {
 
   if (chat) {
     chat.innerHTML += `<div class="message flex flex-row">
-      <img src="${user.avatar}" alt="${user.name || user.email}" class="avatar" crossorigin="anonymous">
+      <img src="${user.avatar}" alt="${
+      user.name || user.email
+    }" class="avatar" crossorigin="anonymous">
       <div class="message-wrapper">
         <p class="message-header">
           <span class="username font-600">${escape(
@@ -162,8 +165,8 @@ const showChat = async () => {
   const messages = await client.service('messages').find({
     query: {
       $sort: { createdAt: -1 },
-      $limit: 25,
-    },
+      $limit: 25
+    }
   })
 
   // We want to show the newest message last
@@ -196,7 +199,7 @@ const login = async (credentials?: any): Promise<boolean> => {
       // log in with the `local` strategy using the credentials we got
       await client.authenticate({
         strategy: 'local',
-        ...credentials,
+        ...credentials
       })
     } else if (localStorage.getItem(storageKey)) {
       // TODO: Why does this try to authenticate without a JWT... causing errors in the server
@@ -274,7 +277,7 @@ addEventListener('#send-message', 'submit', async (ev: any) => {
 
   // Create a new message and then clear the input field
   await client.service('messages').create({
-    text: input.value,
+    text: input.value
   })
 
   input.value = ''

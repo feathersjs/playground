@@ -1,16 +1,25 @@
-import { createLogger, format, transports } from 'winston';
+import { userInfo } from 'node:os'
+// Use winston if installed. see https://github.com/winstonjs/winston
+const loadLogger = async () => {
+  if (userInfo().username === 'blitz') {
+    return console
+  }
 
-// Configure the Winston logger. For the complete documentation see https://github.com/winstonjs/winston
-const logger = createLogger({
-  // To see more detailed errors, change this to 'debug'
-  level: 'info',
-  format: format.combine(
-    format.splat(),
-    format.simple()
-  ),
-  transports: [
-    new transports.Console()
-  ],
-});
+  try {
+    // @ts-ignore
+    const { createLogger, format, transports } = await import('winston')
+    return createLogger({
+      // To see more detailed errors, change this to 'debug'
+      level: 'info',
+      format: format.combine(format.splat(), format.simple()),
+      transports: [new transports.Console()]
+    })
+  } catch (_e) {
+    console.warn('To use winston as your logger, run `npm i -D winston`', e)
+    return console
+  }
+}
 
-export default logger;
+const logger = await loadLogger()
+
+export default logger

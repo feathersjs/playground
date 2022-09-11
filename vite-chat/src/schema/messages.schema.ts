@@ -1,26 +1,28 @@
-import { resolve, querySyntax, Infer } from '@feathersjs/schema'
+import { resolve, querySyntax, Infer, schema, Ajv } from '@feathersjs/schema'
 import { HookContext } from '../declarations'
-import { schema } from '../schema-pr-2702'
 import { UserResult } from './users.schema'
-
+const ajv = new Ajv()
 // Schema and resolver for the basic data model (e.g. creating new entries)
-export const messageDataSchema = schema({
-  $id: 'messageData',
-  type: 'object',
-  additionalProperties: false,
-  required: ['text'],
-  properties: {
-    text: {
-      type: 'string'
-    },
-    userId: {
-      type: 'string'
-    },
-    createdAt: {
-      type: 'string'
+export const messageDataSchema = schema(
+  {
+    $id: 'messageData',
+    type: 'object',
+    additionalProperties: false,
+    required: ['text'],
+    properties: {
+      text: {
+        type: 'string'
+      },
+      userId: {
+        type: 'string'
+      },
+      createdAt: {
+        type: 'string'
+      }
     }
-  }
-} as const)
+  } as const,
+  ajv
+)
 
 export type MessageData = Infer<typeof messageDataSchema>
 
@@ -33,15 +35,18 @@ export const messageDataResolver = resolve<MessageData, HookContext>({
 })
 
 // Schema and resolver for making partial updates
-export const messagePatchSchema = schema({
-  $id: 'messagePatch',
-  type: 'object',
-  additionalProperties: false,
-  required: [],
-  properties: {
-    ...messageDataSchema.properties
-  }
-} as const)
+export const messagePatchSchema = schema(
+  {
+    $id: 'messagePatch',
+    type: 'object',
+    additionalProperties: false,
+    required: [],
+    properties: {
+      ...messageDataSchema.properties
+    }
+  } as const,
+  ajv
+)
 
 export type MessagePatch = Infer<typeof messagePatchSchema>
 
@@ -52,18 +57,21 @@ export const messagePatchResolver = resolve<MessagePatch, HookContext>({
 })
 
 // Schema and resolver for the data that is being returned
-export const messageResultSchema = schema({
-  $id: 'messageResult',
-  type: 'object',
-  additionalProperties: false,
-  required: [...messageDataSchema.required, 'userId', '_id'],
-  properties: {
-    ...messageDataSchema.definition.properties,
-    _id: {
-      type: 'string'
+export const messageResultSchema = schema(
+  {
+    $id: 'messageResult',
+    type: 'object',
+    additionalProperties: false,
+    required: [...messageDataSchema.required, 'userId', '_id'],
+    properties: {
+      ...messageDataSchema.definition.properties,
+      _id: {
+        type: 'string'
+      }
     }
-  }
-} as const)
+  } as const,
+  ajv
+)
 
 export type MessageResult = Infer<typeof messageResultSchema> & {
   user: UserResult
@@ -84,14 +92,17 @@ export const messageDispatchResolver = resolve<MessageResult, HookContext>({
 })
 
 // Schema and resolver for allowed query properties
-export const messageQuerySchema = schema({
-  $id: 'messageQuery',
-  type: 'object',
-  additionalProperties: false,
-  properties: {
-    ...querySyntax(messageResultSchema.properties)
-  }
-} as const)
+export const messageQuerySchema = schema(
+  {
+    $id: 'messageQuery',
+    type: 'object',
+    additionalProperties: false,
+    properties: {
+      ...querySyntax(messageResultSchema.properties)
+    }
+  } as const,
+  ajv
+)
 
 export type MessageQuery = Infer<typeof messageQuerySchema>
 

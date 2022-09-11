@@ -11,7 +11,8 @@
 
 # Todo:
 
-- vite-node is more flexible and allows for better Feathers integration
+- listen to the SIGHUP or what ever signal vite uses to restart config to gracefully shutdown server
+- Use stackblitz to auto redirect to correct client
 
 # Known issues
 
