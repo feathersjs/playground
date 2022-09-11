@@ -17,3 +17,8 @@
 # Known issues
 
 - Syntax errors while authoring will require a manual server restart
+- If you've logged in before, the first loggin will fail twice and give up
+  - As if it's attempting to login for the account creation
+  - As a workaround I used sessionStorage... but that is undesireable.
+- split resolvers and schema for messages
+- handle SIGINT by killing the spawn, otherwiser tsx will become IMMORTAL!

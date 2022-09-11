@@ -107,7 +107,8 @@ $RECYCLE.BIN/
 *.lnk
 
 # Others
-/data/
-/dist/
+/data
+/dist
+/src-js
 /test/data
 .nyc_output

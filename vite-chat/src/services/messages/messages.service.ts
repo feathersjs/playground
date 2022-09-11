@@ -1,26 +1,26 @@
 // Initializes the `messages` service on path `/messages`
 import { Params, ServiceInterface } from '@feathersjs/feathers'
 
-import { Application } from '../../declarations'
-import { Messages } from './messages.class'
-import createModel from '../../models/messages.model'
-import hooks from './messages.hooks'
+import { Application } from '#src/declarations.js'
+import { Messages } from '#src/services//messages/messages.class.js'
+import createModel from '#src/models/messages.model.js'
+import hooks from '#src/services//messages/messages.hooks.js'
 import {
-  MessageData,
-  MessageResult,
-  MessageQuery
-} from '../../schema/messages.schema'
+  MessagesData,
+  MessagesResult,
+  MessagesQuery
+} from '#src/services/messages/messages.schema.js'
 
 type MessageService = ServiceInterface<
-  MessageResult,
-  MessageData,
-  Params<MessageQuery>
+  MessagesResult,
+  MessagesData,
+  Params<MessagesQuery>
 >
 
 // Add this service to the service type index
-declare module '../../declarations' {
+declare module '#src/declarations.js' {
   interface ServiceTypes {
-    messages: MessageService
+    messages: MessagesService
   }
 }
 
@@ -34,7 +34,7 @@ export default function (app: Application) {
   }
 
   // Initialize our service with any options it requires
-  app.use('messages', new Messages(options, app) as MessageService)
+  app.use('messages', new Messages(options, app) as MessagesService)
 
   // Get our initialized service so that we can register hooks
   const service = app.service('messages')

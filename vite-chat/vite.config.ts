@@ -13,3 +13,13 @@ export default defineConfig(async ({ command }) => {
     build: { target: 'esnext' }
   }
 })
+
+/*/ Using a single function to handle multiple signals
+function handle(signal) {
+  console.log(`Received ${signal}`)
+}
+
+process.on('SIGUSR1', handle)
+process.on('SIGUSR2', handle)
+process.on('SIGTERM', handle)
+*/

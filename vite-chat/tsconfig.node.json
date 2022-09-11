@@ -4,7 +4,15 @@
     "module": "esnext",
     "moduleResolution": "Node16",
     "allowSyntheticDefaultImports": true,
-    "removeComments": false // Remove if comfortable with TypeScript
+    "removeComments": false, // Remove if comfortable with TypeScript
+    "outDir": "src-js"
   },
-  "include": ["src/**/*", "test/**/*", "vite.config.ts"]
+  "include": [
+    "src/middleware/**/*",
+    "src/models/**/*",
+    // "src/services/**/*",
+    "test/**/*",
+    "vite.config.ts"
+  ],
+  "xxx-files": ["src/index.ts"]
 }

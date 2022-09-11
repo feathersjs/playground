@@ -3,7 +3,7 @@ import { Server } from 'http'
 import fetch from 'node-fetch'
 import { URL } from 'node:url'
 
-import app from '../src/app'
+import app from '#src/app.ts'
 
 const port = '' + 8998
 const getUrl = (pathname?: string) => {
@@ -42,8 +42,8 @@ describe('Feathers application tests', () => {
       const url = getUrl('path/to/nowhere')
       const response = await fetch(url, {
         headers: {
-          Accept: 'text/html',
-        },
+          Accept: 'text/html'
+        }
       })
 
       assert.equal(response.status, 404)

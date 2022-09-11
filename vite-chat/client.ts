@@ -1,11 +1,13 @@
+/// <reference types="vite/client" />
+
 import {
   default as feathers,
   socketio,
   authentication
 } from '@feathersjs/client'
 import io from 'socket.io-client'
-import type { MessageData } from '#src/schema/messages.schema.js'
-import type { UserData } from '#src/schema/users.schema.js'
+import type { MessagesData } from '#src/services/messages/messages.schema.js'
+import type { UsersData } from '#src/services/users/users.schema.js'
 
 // Establish a Socket.io connection
 const socket = io(
@@ -19,7 +21,7 @@ const socket = io(
 const client = feathers()
 client.configure(socketio(socket))
 const storageKey = 'feathers-jwt'
-client.configure(authentication({ storageKey }))
+client.configure(authentication({ storageKey, storage: sessionStorage }))
 
 // UNSAFELY safely escape HTML
 const escape = (str: any) =>
@@ -97,7 +99,7 @@ const chatHTML = `<main class="flex flex-column">
 </main>`
 
 // Add a new user to the list
-const addUser = (user: UserData) => {
+const addUser = (user: UsersData) => {
   const userList = document.querySelector('.user-list') as HTMLDivElement
   userList.innerHTML += `<li>
     <a class="block relative" href="#">
@@ -115,14 +117,14 @@ const addUser = (user: UserData) => {
 }
 
 // Renders a message to the page
-const addMessage = (message: MessageData) => {
+const addMessage = (message: MessagesData) => {
   // The user that sent this message (added by the populate-user hook)
-  const { user = {} } = message
+  const { user = {} }: any = message
   const chat = document.querySelector('.chat')
   // Escape HTML to prevent XSS attacks
   const text = escape(message.text)
   const dtf = new Intl.DateTimeFormat(undefined, { timeStyle: 'short' })
-  const prettyD = dtf.format(new Date(message.createdAt))
+  const prettyD = dtf.format(new Date(message.createdAt as string))
 
   if (chat) {
     chat.innerHTML += `<div class="message flex flex-row">

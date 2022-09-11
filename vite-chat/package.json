@@ -3,22 +3,22 @@
   "description": "A FeathersJS real-time chat application written in TypeScript",
   "version": "1.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run i && vite",
     "dev:client": "SKIP_SERVER=true vite",
     "dev:server": "tsx watch --clear-screen=false src/index.ts",
     "preview": "vite preview",
-    "test": "vitest run",
+    "test:server": "npx typescript --noEmit && vitest run",
+    "test:client": "npx typescript --noEmit",
     "build": "vite build --outDir dist/client",
     "start": "tsx src/index.ts",
     "update": "npx npm-check-updates -u",
-    "i": "ls node_modules &> /dev/null || npm i"
+    "i": "ls node_modules &> /dev/null || npm i",
+    "switch-to-javascript-mode": "npx typescript -p tsconfig.node.json"
   },
   "type": "module",
   "homepage": "",
   "main": "src",
-  "keywords": [
-    "feathers"
-  ],
+  "keywords": ["feathers"],
   "author": {
     "name": "David Luecke",
     "email": "daff@neyeon.com"
@@ -53,7 +53,9 @@
     "cors": "^2.8.5",
     "feathers-nedb": "^6.0.0",
     "helmet": "^5.1.0",
-    "socket.io-client": "^4.5.1"
+    "run": "^1.4.0",
+    "socket.io-client": "^4.5.1",
+    "test": "^3.2.1"
   },
   "devDependencies": {
     "@feathersjs/cli": "pre",
@@ -63,13 +65,11 @@
     "isomorphic-git": "^1.19.1",
     "node-fetch": "^3.2.9",
     "tsx": "^3.9.0",
-    "typescript": "^4.8.3",
     "vite": "^3.0.2",
     "vitest": "^0.18.1"
   },
   "stackblitz": {
-    "installDependencies": false,
-    "startCommand": "npm run i && npm run dev"
+    "installDependencies": false
   },
   "prettier": {
     "semi": false,

@@ -1,6 +1,6 @@
 import { authenticate } from '@feathersjs/authentication'
 import { resolveAll } from '@feathersjs/schema'
-import { messageResolvers } from '../../schema/messages.schema'
+import { messagesResolvers } from '#src/services/messages/messages.resolvers.js'
 
 const L = 'lol, jk, lmao, btw, ikr, rofl, OMG, smh, imo, hyfr'.split(',')
 const append = () => (ctx: any) => {
@@ -14,7 +14,7 @@ const append = () => (ctx: any) => {
 
 export default {
   around: {
-    all: [authenticate('jwt'), resolveAll(messageResolvers)],
+    all: [authenticate('jwt'), resolveAll(messagesResolvers)],
     find: [],
     get: [],
     create: [],
