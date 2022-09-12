@@ -12,11 +12,15 @@ const loadLogger = async () => {
       // To see more detailed errors, change this to 'debug'
       level: 'info',
       format: format.combine(format.splat(), format.simple()),
-      transports: [new transports.Console()]
+      transports: [new transports.Console()],
     })
-  } catch (_e) {
-    console.warn('To use winston as your logger, run `npm i -D winston`', e)
+  } catch (e) {
+    console.warn('To use winston as your logger, run `npm i -D winston`')
     return console
+    /*} else {
+      throw e
+    }
+    */
   }
 }
 
