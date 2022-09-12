@@ -2,6 +2,7 @@
   "name": "feathers-vite-chat",
   "description": "A FeathersJS real-time chat application written in TypeScript",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "npm run i && vite",
     "dev:client": "SKIP_SERVER=true vite",
@@ -13,12 +14,19 @@
     "start": "tsx src/index.ts",
     "update": "npx npm-check-updates -u",
     "i": "ls node_modules &> /dev/null || npm i",
+    "force-checkout": "npx g4c checkout --force HEAD",
     "switch-to-javascript-mode": "npx typescript -p tsconfig.node.json"
   },
-  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feathersjs/playground.git",
+    "directory": "vite-chat"
+  },
   "homepage": "",
   "main": "src",
-  "keywords": ["feathers"],
+  "keywords": [
+    "feathers"
+  ],
   "author": {
     "name": "David Luecke",
     "email": "daff@neyeon.com"
