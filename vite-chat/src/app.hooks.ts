@@ -1,7 +1,7 @@
 // Application hooks that run for every service
 // Don't remove this comment. It's needed to format import lines nicely.
 
-import { HookContext } from '#src/declarations.js'
+import { HookContext } from './declarations.js'
 
 const createdAt = (ctx: any) => {
   const items = Array.isArray(ctx.data) ? ctx.data : [ctx.data]
@@ -11,27 +11,13 @@ const createdAt = (ctx: any) => {
   }
 }
 
+// all,find,get,create,update,patch,remove
 export default {
   before: {
     all: [],
-    find: [],
-    get: [],
-    create: [createdAt],
-    update: [],
-    patch: [],
-    remove: []
+    create: [createdAt]
   },
-
-  after: {
-    all: [],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
-  },
-
+  after: {},
   error: {
     all: [
       (context: HookContext) => {
@@ -42,12 +28,6 @@ export default {
           console.log(context.error.message)
         }
       }
-    ],
-    find: [],
-    get: [],
-    create: [],
-    update: [],
-    patch: [],
-    remove: []
+    ]
   }
 }

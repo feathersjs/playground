@@ -1,19 +1,19 @@
 import crypto from 'crypto'
 import { resolve } from '@feathersjs/schema'
 import { passwordHash } from '@feathersjs/authentication-local'
-import type { HookContext } from '#src/declarations.js'
+import type { HookContext } from '../../declarations.js'
 import type {
   UsersData,
   UsersPatch,
   UsersResult,
   UsersQuery
-} from '#src/services/users/users.schema.js'
+} from '../../services/users/users.schema.js'
 import {
   usersDataSchema,
   usersPatchSchema,
   usersResultSchema,
   usersQuerySchema
-} from '#src/services/users/users.schema.js'
+} from '../../services/users/users.schema.js'
 
 // Resolver for the basic data model (e.g. creating new entries)
 export const usersDataResolver = resolve<UsersData, HookContext>({

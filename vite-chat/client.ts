@@ -6,17 +6,14 @@ import {
   authentication
 } from '@feathersjs/client'
 import io from 'socket.io-client'
-import type { MessagesData } from '#src/services/messages/messages.schema.js'
-import type { UsersData } from '#src/services/users/users.schema.js'
+import type { MessagesData } from './src/services/messages/messages.schema.js'
+import type { UsersData } from './src/services/users/users.schema.js'
 
 // Establish a Socket.io connection
-const socket = io(
-  window.location.origin.replace(/--\d*\.local/, '--9000.local'),
-  {
-    transports: ['websocket'],
-    reconnectionDelay: import.meta.env.DEV ? 60 : 1000
-  }
-)
+const socket = io(import.meta.env.SOCKET_URL, {
+  transports: ['websocket'],
+  reconnectionDelay: import.meta.env.DEV ? 60 : 1000
+})
 // Initialize our Feathers client application through Socket.io
 const client = feathers()
 client.configure(socketio(socket))
@@ -52,10 +49,6 @@ const loginScreenHTML = `<main class="login container">
         <button type="button" id="signup" class="button button-primary block signup">
           Sign up and log in
         </button>
-
-        <a class="button button-primary block" href="/oauth/github">
-          Login with GitHub
-        </a>
       </form>
     </div>
   </div>

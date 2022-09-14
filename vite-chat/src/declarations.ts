@@ -1,11 +1,8 @@
 import { Application as ExpressFeathers } from '@feathersjs/express'
 import { HookContext as FeathersHookContext } from '@feathersjs/feathers'
 import '@feathersjs/transport-commons'
-import { ConfigurationSchema } from '#src/configuration.js'
 
-import { UsersResult } from '#src/services/users/users.schema.ts'
-
-export interface Configuration extends ConfigurationSchema {}
+import { UsersResult } from './services/users/users.schema.js'
 
 // A mapping of service names to types. Will be extended in service files.
 export interface ServiceTypes {}

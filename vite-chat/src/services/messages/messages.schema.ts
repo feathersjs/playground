@@ -2,7 +2,7 @@ import { querySyntax, Infer, schema, Ajv } from '@feathersjs/schema'
 import {
   UsersResult,
   usersDataSchema
-} from '#src/services/users/users.schema.js'
+} from '../../services/users/users.schema.js'
 
 const ajv = new Ajv()
 

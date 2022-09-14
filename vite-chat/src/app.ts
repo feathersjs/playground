@@ -1,4 +1,3 @@
-import compress from 'compression'
 import helmet from 'helmet'
 
 import { feathers } from '@feathersjs/feathers'
@@ -14,68 +13,69 @@ import {
 } from '@feathersjs/express'
 import socketio from '@feathersjs/socketio'
 
-import { Application } from '#src/declarations.js'
-import logger from '#src/logger.js'
-import middleware from '#src/middleware/index.js'
-import { services } from '#src/services/index.js'
-import appHooks from '#src/app.hooks.js'
-import channels from '#src/channels.js'
-import authentication from '#src/authentication.js'
+import { Application } from './declarations.js'
+import middleware from './middleware/index.js'
+import { services } from './services/index.js'
+import appHooks from './app.hooks.js'
+import channels from './channels.js'
+import authentication from './authentication.js'
 // Don't remove this comment. It's needed to format import lines nicely.
 
-const app: Application = express(feathers())
+export const main = async () => {
+  const app: Application = express(feathers())
 
-// Load app configuration
-app.configure(configuration())
-// Enable security, CORS, compression, favicon and body parsing
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-    frameguard: false
-  })
-)
-app.use(compress())
-app.use(json())
-app.use(urlencoded({ extended: true }))
+  // Load app configuration
+  app.configure(configuration())
+  // Enable security, CORS, compression, favicon and body parsing
+  app.use(
+    helmet({
+      contentSecurityPolicy: false,
+      frameguard: false
+    })
+  )
+  app.use(json())
+  app.use(urlencoded({ extended: true }))
 
-if (process.env.NODE_ENV === 'production') {
-  app.use('/', staticFiles(app.get('dist')))
-} else {
-  app.use('/', (req, res, next) => {
-    if (req.path === '/') {
-      res.send(`<html lang="en">
+  if (process.env.NODE_ENV === 'production') {
+    app.use('/', staticFiles(app.get('dist')))
+  } else {
+    app.use('/', (req, res, next) => {
+      if (req.path === '/') {
+        res.send(`<html lang="en">
         Hello there, You seem to be lost...<br>
         Perhaps you have the wrong port?<br><br>
         NODE_ENV: ${process.env.NODE_ENV}
       `)
-    } else {
-      next()
-    }
-  })
+      } else {
+        next()
+      }
+    })
+  }
+
+  // Set up Plugins and providers
+  app.configure(rest())
+  app.configure(
+    socketio({
+      cors: {
+        origin: '*'
+      }
+    })
+  )
+
+  // Configure other middleware (see `middleware/index.js`)
+  app.configure(middleware)
+  app.configure(authentication)
+  // Set up our services (see `services/index.js`)
+  app.configure(services)
+  // Set up event channels (see channels.js)
+  app.configure(channels)
+
+  // Configure a middleware for 404s and the error handler
+  app.use(notFound())
+  app.use(errorHandler({ logger: console }))
+
+  app.hooks(appHooks)
+
+  return app
 }
-
-// Set up Plugins and providers
-app.configure(rest())
-app.configure(
-  socketio({
-    cors: {
-      origin: '*'
-    }
-  })
-)
-
-// Configure other middleware (see `middleware/index.js`)
-app.configure(middleware)
-app.configure(authentication)
-// Set up our services (see `services/index.js`)
-app.configure(services)
-// Set up event channels (see channels.js)
-app.configure(channels)
-
-// Configure a middleware for 404s and the error handler
-app.use(notFound())
-app.use(errorHandler({ logger }))
-
-app.hooks(appHooks)
-
-export default app
+export default main

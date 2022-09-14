@@ -1,20 +1,20 @@
 // Initializes the `users` service on path `/users`
 import { Params, ServiceInterface } from '@feathersjs/feathers'
 
-import { Application } from '#src/declarations.js'
-import { Users } from '#src/services/users/users.class.js'
-import createModel from '#src/models/users.model.js'
-import hooks from '#src/services/users/users.hooks.js'
+import { Application } from '../../declarations.js'
+import { Users } from '../../services/users/users.class.js'
+import createModel from '../../models/users.model.js'
+import hooks from '../../services/users/users.hooks.js'
 import {
   UsersData,
   UsersQuery,
   UsersResult
-} from '#src/services/users/users.schema.js'
+} from '../../services/users/users.schema.js'
 
 type UsersService = ServiceInterface<UsersResult, UsersData, Params<UsersQuery>>
 
 // Add this service to the service type index
-declare module '#src/declarations.js' {
+declare module '../../declarations.js' {
   interface ServiceTypes {
     users: UsersService
   }

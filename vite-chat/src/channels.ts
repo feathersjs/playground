@@ -1,6 +1,6 @@
 import { HookContext } from '@feathersjs/feathers'
-import { Application } from '#src/declarations.js'
-import { printNodeModulesAge } from '#src/utils.js'
+import { Application } from './declarations.js'
+import { printNodeModulesAge } from './utils.js'
 
 export default function (app: Application) {
   if (typeof app.channel !== 'function') {

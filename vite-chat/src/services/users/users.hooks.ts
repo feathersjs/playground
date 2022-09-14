@@ -1,6 +1,6 @@
 import { authenticate } from '@feathersjs/authentication'
 import { resolveAll } from '@feathersjs/schema'
-import { usersResolvers } from '#src/services/users/users.resolvers.js'
+import { usersResolvers } from '../../services/users/users.resolvers.js'
 
 export default {
   around: {

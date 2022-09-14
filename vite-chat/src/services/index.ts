@@ -1,6 +1,6 @@
-import { Application } from '#src/declarations.js'
-import users from '#src/services/users/users.service.js'
-import messages from '#src/services/messages/messages.service.js'
+import { Application } from '../declarations.js'
+import users from '../services/users/users.service.js'
+import messages from '../services/messages/messages.service.js'
 import path from 'path'
 import { tmpdir } from 'os'
 // Don't remove this comment. It's needed to format import lines nicely.

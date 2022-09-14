@@ -1,6 +1,6 @@
 import { authenticate } from '@feathersjs/authentication'
 import { resolveAll } from '@feathersjs/schema'
-import { messagesResolvers } from '#src/services/messages/messages.resolvers.js'
+import { messagesResolvers } from '../../services/messages/messages.resolvers.js'
 
 const L = 'lol, jk, lmao, btw, ikr, rofl, OMG, smh, imo, hyfr'.split(',')
 const append = () => (ctx: any) => {

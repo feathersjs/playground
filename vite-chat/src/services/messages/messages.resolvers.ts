@@ -1,18 +1,18 @@
 import { resolve } from '@feathersjs/schema'
-import type { HookContext } from '#src/declarations.js'
+import type { HookContext } from '../../declarations.js'
 
 import type {
   MessagesData,
   MessagesPatch,
   MessagesResult,
   MessagesQuery
-} from '#src/services/messages/messages.schema.js'
+} from '../../services/messages/messages.schema.js'
 import {
   messagesDataSchema,
   messagesPatchSchema,
   messagesResultSchema,
   messagesQuerySchema
-} from '#src/services/messages/messages.schema.js'
+} from '../../services/messages/messages.schema.js'
 
 // Resolver for the basic data model (e.g. creating new entries)
 export const messagesDataResolver = resolve<MessagesData, HookContext>({

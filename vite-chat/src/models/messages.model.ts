@@ -1,6 +1,6 @@
 import NeDB from '@seald-io/nedb'
 import path from 'path'
-import { Application } from '#src/declarations.js'
+import type { Application } from '../declarations.js'
 
 export default function (app: Application) {
   const Model = new NeDB({
