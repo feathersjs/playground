@@ -3,12 +3,12 @@ import { Server } from 'http'
 import fetch from 'node-fetch'
 import { URL } from 'node:url'
 
-import app from '../api/app.js'
+import { main } from '../api/app.js'
 
 const port = '' + 8998
 const getUrl = (pathname?: string) => {
   const url = new URL('http://localhost')
-  url.hostname = app.get('host') || 'localhost'
+  url.hostname = 'localhost'
   url.protocol = 'http'
   url.port = port
   url.pathname = (pathname as string) || ''
@@ -20,7 +20,7 @@ describe('Feathers application tests', () => {
 
   beforeEach(async () => {
     console.log('STARTING TEST SERVER', port)
-    server = await app.listen(port)
+    server = await (await main()).listen(port)
   })
 
   afterEach(() => {
