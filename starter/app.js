@@ -36,7 +36,9 @@ process.on('unhandledRejection', (reason, p) =>
 
 // For good measure let's create a message
 // So our API doesn't look so empty
-app.service('messages').create([
-  { text: 'Hello world from the server' },
-  { text: 'For more complete sandboxes with TypeScript etc, see github.com/feathersjs/playground'}
-])
+app.service('messages').create({ text: 'Hello world from the server' })
+app
+  .service('messages')
+  .create({
+    text: 'For more complete sandboxes with TypeScript etc, see github.com/feathersjs/playground'
+  })
