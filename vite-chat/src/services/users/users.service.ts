@@ -2,9 +2,7 @@
 import { Params, ServiceInterface } from '@feathersjs/feathers'
 
 import { Application } from '../../declarations.js'
-import { Users } from '../../services/users/users.class.js'
-import createModel from '../../models/users.model.js'
-import hooks from '../../services/users/users.hooks.js'
+import { Users, hooks, createModel } from '../../services/users/users.class.js'
 import {
   UsersData,
   UsersQuery,

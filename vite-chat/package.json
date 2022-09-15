@@ -42,15 +42,12 @@
     "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
-    "@feathersjs/cli": "pre",
-    "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.8",
-    "isomorphic-git": "^1.19.1",
+    "feathers-vite": "^1.0.2",
     "node-fetch": "^3.2.9",
     "vite": "^3.1.0",
-    "vitest": "^0.18.1",
-    "feathers-vite": "^1.0.0"
+    "vitest": "^0.18.1"
   },
   "stackblitz": {
     "installDependencies": false

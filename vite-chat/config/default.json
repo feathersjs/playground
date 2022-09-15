@@ -33,5 +33,5 @@
       "passwordField": "password"
     }
   },
-  "nedb": "./nedb"
+  "nedb": "./data"
 }

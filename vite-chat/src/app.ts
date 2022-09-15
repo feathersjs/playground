@@ -14,7 +14,6 @@ import {
 import socketio from '@feathersjs/socketio'
 
 import { Application } from './declarations.js'
-import middleware from './middleware/index.js'
 import { services } from './services/index.js'
 import appHooks from './app.hooks.js'
 import channels from './channels.js'
@@ -38,18 +37,6 @@ export const main = async () => {
 
   if (process.env.NODE_ENV === 'production') {
     app.use('/', staticFiles(app.get('dist')))
-  } else {
-    app.use('/', (req, res, next) => {
-      if (req.path === '/') {
-        res.send(`<html lang="en">
-        Hello there, You seem to be lost...<br>
-        Perhaps you have the wrong port?<br><br>
-        NODE_ENV: ${process.env.NODE_ENV}
-      `)
-      } else {
-        next()
-      }
-    })
   }
 
   // Set up Plugins and providers
@@ -62,8 +49,6 @@ export const main = async () => {
     })
   )
 
-  // Configure other middleware (see `middleware/index.js`)
-  app.configure(middleware)
   app.configure(authentication)
   // Set up our services (see `services/index.js`)
   app.configure(services)

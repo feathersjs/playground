@@ -2,16 +2,18 @@
 import { Params, ServiceInterface } from '@feathersjs/feathers'
 
 import { Application } from '../../declarations.js'
-import { Messages } from '../../services//messages/messages.class.js'
-import createModel from '../../models/messages.model.js'
-import hooks from '../../services//messages/messages.hooks.js'
+import {
+  Messages,
+  hooks,
+  createModel
+} from '../../services//messages/messages.class.js'
 import {
   MessagesData,
   MessagesResult,
   MessagesQuery
 } from '../../services/messages/messages.schema.js'
 
-type MessageService = ServiceInterface<
+type MessagesService = ServiceInterface<
   MessagesResult,
   MessagesData,
   Params<MessagesQuery>

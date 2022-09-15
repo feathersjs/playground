@@ -112,23 +112,29 @@ const addUser = (user: UsersData) => {
 // Renders a message to the page
 const addMessage = (message: MessagesData) => {
   // The user that sent this message (added by the populate-user hook)
-  const { user = {} }: any = message
+  const user = message.user || (undefined as any)
   const chat = document.querySelector('.chat')
   // Escape HTML to prevent XSS attacks
   const text = escape(message.text)
   const dtf = new Intl.DateTimeFormat(undefined, { timeStyle: 'short' })
-  const prettyD = dtf.format(new Date(message.createdAt as string))
+  const prettyD = message.createdAt
+    ? dtf.format(new Date(message.createdAt as string))
+    : ''
 
   if (chat) {
-    chat.innerHTML += `<div class="message flex flex-row">
-      <img src="${user.avatar}" alt="${
-      user.name || user.email
-    }" class="avatar" crossorigin="anonymous">
+    const img = user
+      ? `<img src="${user.avatar}" alt="${
+          user.name || user.email
+        }" class="avatar" crossorigin="anonymous">`
+      : ''
+    const userName = user
+      ? `<span class="username font-600">${escape(
+          user.name || user.email || ''
+        )}</span>`
+      : ''
+    chat.innerHTML += `<div class="message flex flex-row">${img}
       <div class="message-wrapper">
-        <p class="message-header">
-          <span class="username font-600">${escape(
-            user.name || user.email
-          )}</span>
+        <p class="message-header"> ${userName}
           <span class="sent-date font-300">${prettyD}</span>
         </p>
         <p class="message-content font-300">${text}</p>
@@ -172,6 +178,10 @@ const showChat = async () => {
 
   // Add each user to the list
   users.data.forEach(addUser)
+
+  if (messages.data.length === 0) {
+    addMessage({ text: `For documentation, visit dove.feathersjs.com` })
+  }
 }
 
 // Retrieve email/password object from the login/signup page
