@@ -35,7 +35,7 @@ export const main = async () => {
   app.use(json())
   app.use(urlencoded({ extended: true }))
 
-  if (process.env.NODE_ENV === 'production') {
+  if (globalThis.process?.env?.NODE_ENV === 'production') {
     app.use('/', staticFiles(app.get('dist')))
   }
 

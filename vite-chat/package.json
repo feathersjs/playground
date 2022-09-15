@@ -44,10 +44,9 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.8",
-    "feathers-vite": "^1.0.3",
+    "feathers-vite": "^1.0.4",
     "node-fetch": "^3.2.9",
-    "vite": "^3.1.0",
-    "vitest": "^0.18.1"
+    "vite": "^3.1.0"
   },
   "stackblitz": {
     "installDependencies": false
