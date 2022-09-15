@@ -1,7 +1,7 @@
 {
   "name": "feathers-playground-starter",
   "version": "1.0.0",
-  "description": "The project on the StackBlitz's “Create a New Project” page.",
+  "description": "Feathers, the Real-Time and API Application Framework",
   "scripts": {
     "start": "nodemon app.js"
   },
