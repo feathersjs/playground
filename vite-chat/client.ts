@@ -6,8 +6,8 @@ import {
   authentication
 } from '@feathersjs/client'
 import io from 'socket.io-client'
-import type { MessagesData } from './src/services/messages/messages.schema.js'
-import type { UsersData } from './src/services/users/users.schema.js'
+import type { MessagesData } from './api/services/messages/messages.schema.js'
+import type { UsersData } from './api/services/users/users.schema.js'
 
 // Establish a Socket.io connection
 const socket = io(import.meta.env.SOCKET_URL, {
@@ -97,7 +97,7 @@ const addUser = (user: UsersData) => {
   userList.innerHTML += `<li>
     <a class="block relative" href="#">
       <img src="${user.avatar}" alt="" class="avatar" crossorigin="anonymous">
-      <span class="absolute username">${escape(user.name || user.email)}</span>
+      <span class="absolute username">${escape(user.email)}</span>
     </a>
   </li>`
 

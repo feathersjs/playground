@@ -3,7 +3,7 @@ import { Server } from 'http'
 import fetch from 'node-fetch'
 import { URL } from 'node:url'
 
-import app from '../src/app.js'
+import app from '../api/app.js'
 
 const port = '' + 8998
 const getUrl = (pathname?: string) => {
