@@ -6,7 +6,7 @@ import {
   authentication
 } from '@feathersjs/client'
 import io from 'socket.io-client'
-import type { MessagesData } from './api/services/messages/messages.schema.js'
+import type { MessagesResult } from './api/services/messages/messages.schema.js'
 import type { UsersData } from './api/services/users/users.schema.js'
 
 // Establish a Socket.io connection
@@ -24,7 +24,11 @@ client.configure(authentication({ storageKey, storage: sessionStorage }))
 const escape = (str: any) =>
   str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
+
 const appEl = document.getElementById('app') as HTMLDivElement
+const store = {
+  holiday: import.meta.env.VITE_HOLIDAY ? JSON.parse(import.meta.env.VITE_HOLIDAY) : {}
+}
 const loginScreenHTML = `<main class="login container">
   <div class="row">
     <div class="col-12 col-6-tablet push-3-tablet text-center heading">
@@ -58,9 +62,8 @@ const loginScreenHTML = `<main class="login container">
 const chatHTML = `<main class="flex flex-column">
   <header class="title-bar flex flex-row flex-center">
     <div class="title-wrapper block center-element">
-      <img class="logo" src="https://feathersjs.com/img/feathers-logo-wide.png"
-        alt="Feathers">
-      <span class="title">Vite Chat</span>
+    ${store.holiday.emojii} <img class="logo" src="https://raw.githubusercontent.com/feathersjs/feathers/ae85fa216f12f7ff5d15e7039640e27a09989ea4/docs/public/img/feathers-logo-horizontal.svg"
+        alt="Feathers"> ${store.holiday.emojii}
     </div>
   </header>
 
@@ -97,7 +100,7 @@ const addUser = (user: UsersData) => {
   userList.innerHTML += `<li>
     <a class="block relative" href="#">
       <img src="${user.avatar}" alt="" class="avatar" crossorigin="anonymous">
-      <span class="absolute username">${escape(user.email)}</span>
+      <span class="absolute username">${escape(user.name)}</span>
     </a>
   </li>`
 
@@ -110,12 +113,23 @@ const addUser = (user: UsersData) => {
 }
 
 // Renders a message to the page
-const addMessage = (message: MessagesData) => {
+const addMessage = (message: MessagesResult) => {
+  const contentClass = 'message-content'
   // The user that sent this message (added by the populate-user hook)
   const user = message.user || (undefined as any)
-  const chat = document.querySelector('.chat')
+  console.log(message)
+  const id = message['_id'] || (message as any)['id'] // support different DBs/APIs. Task: Replace with a trivial resolver that always returns _id
+  const messageId = 'messageId-'+ id
+  const chat = document.querySelector('.chat') as HTMLDivElement
+  const messageEl = chat.querySelector('.'+ messageId)
+  if (messageEl) {
+    const contentEl = messageEl.querySelector('.'+contentClass) || {} as any
+    contentEl.textContent = message.text
+    return
+  }
+
   // Escape HTML to prevent XSS attacks
-  const text = escape(message.text)
+  const text = escape(message.text) // task: use DOM instead
   const dtf = new Intl.DateTimeFormat(undefined, { timeStyle: 'short' })
   const prettyD = message.createdAt
     ? dtf.format(new Date(message.createdAt as string))
@@ -123,21 +137,17 @@ const addMessage = (message: MessagesData) => {
 
   if (chat) {
     const img = user
-      ? `<img src="${user.avatar}" alt="${
-          user.name || user.email
-        }" class="avatar" crossorigin="anonymous">`
+      ? `<img src="${user.avatar}" alt="${user.name}" class="avatar" crossorigin="anonymous">`
       : ''
     const userName = user
-      ? `<span class="username font-600">${escape(
-          user.name || user.email || ''
-        )}</span>`
+      ? `<span class="username font-600">${escape(user.name || '')}</span>`
       : ''
-    chat.innerHTML += `<div class="message flex flex-row">${img}
+    chat.innerHTML += `<div class="${messageId} message flex flex-row">${img}
       <div class="message-wrapper">
         <p class="message-header"> ${userName}
           <span class="sent-date font-300">${prettyD}</span>
         </p>
-        <p class="message-content font-300">${text}</p>
+        <p class="${contentClass} font-300">${text}</p>
       </div>
     </div>`
 
@@ -179,22 +189,17 @@ const showChat = async () => {
   // Add each user to the list
   users.data.forEach(addUser)
 
-  if (messages.data.length === 0) {
-    addMessage({ text: `For documentation, visit dove.feathersjs.com` })
-  }
 }
 
 // Retrieve email/password object from the login/signup page
 const getCredentials = () => {
-  const dev = import.meta.env.DEV
-    ? 'Droid #' + crypto.getRandomValues(new Uint16Array(1))
-    : ''
+  const dev = import.meta.env.VITE_USER ? { ...JSON.parse(import.meta.env.VITE_USER), password: 'password' } : false
   const email =
-    document.querySelector<HTMLInputElement>('[name="email"]')?.value
+    document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
   const password =
-    document.querySelector<HTMLInputElement>('[name="password"]')?.value
+    document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
 
-  return email && password ? { email, password } : { email: dev, password: dev }
+  return email === '' && dev ? dev : { email, password }
 }
 
 // Log in either using the given email/password or the token from storage
@@ -226,7 +231,7 @@ const login = async (credentials?: any): Promise<boolean> => {
 const logout = async () => {
   try {
     await client.logout()
-  } catch (e) {}
+  } catch (e) { }
   localStorage.removeItem('feathers-jwt')
   showLogin()
 }
@@ -288,15 +293,17 @@ addEventListener('#send-message', 'submit', async (ev: any) => {
   input.value = ''
 })
 
-// Listen to created events and add the new message in real-time
+// Real-time event listeners for messages and users
 client.service('messages').on('created', addMessage)
-
-// We will also see when new users get created in real-time
+client.service('messages').on('updated', addMessage)
 client.service('users').on('created', addUser)
 
-// Call login right away so we can show the chat window
-// If the user can already be authenticated
+const main = async (D: Document) => {
+  D.body.style.setProperty("--accent-color", store.holiday.accentColor)
 
-if ((await login()) === false && import.meta.env.DEV) {
-  signup()
+  // If DEV, login at boot so we can show the chat window
+  if ((await login()) === false && import.meta.env.DEV) {
+    signup()
+  }
 }
+main(document)

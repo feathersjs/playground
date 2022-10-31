@@ -7,7 +7,7 @@ import {
   hooks,
   createModel
 } from '../../services//messages/messages.class.js'
-import {
+import type {
   MessagesData,
   MessagesResult,
   MessagesQuery

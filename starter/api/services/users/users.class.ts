@@ -1,18 +1,16 @@
-import { Service, NedbServiceOptions } from 'feathers-nedb'
-import NeDB from '@seald-io/nedb'
-import path from 'path'
+import { memory as database, MemoryService as Service } from 'feathers-database'
 import { authenticate } from '@feathersjs/authentication'
 import { resolveAll } from '@feathersjs/schema'
 import { usersResolvers } from '../../services/users/users.resolvers.js'
 import type { Application } from '../../declarations.js'
 
 export class Users extends Service {
-  constructor(options: Partial<NedbServiceOptions>, app: Application) {
+  constructor(options: any, app: Application) {
     super(options)
   }
 }
 
-export const hooks = {
+export const hooks: any = {
   around: {
     all: [],
     find: [authenticate('jwt'), resolveAll(usersResolvers)],
@@ -25,12 +23,12 @@ export const hooks = {
 }
 
 export const createModel = (app: Application) => {
-  const Model = new NeDB({
-    filename: path.join(app.get('nedbPath'), 'users.db'),
-    autoload: true
+  return database({
+    id: '_id', // todo: https://github.com/feathersjs/feathers/issues/2839
+    startId: 1,
+    paginate: {
+      default: 2,
+      max: 4
+    }
   })
-
-  Model.ensureIndex({ fieldName: 'email', unique: true })
-
-  return Model
 }

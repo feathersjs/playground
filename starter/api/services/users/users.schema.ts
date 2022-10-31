@@ -16,6 +16,9 @@ export const usersDataSchema = schema(
       email: {
         type: 'string'
       },
+      name: {
+        type: 'string'
+      },
       password: {
         type: 'string'
       },
@@ -58,7 +61,7 @@ export const usersResultSchema = schema(
     properties: {
       ...usersDataSchema.definition.properties,
       _id: {
-        type: 'string'
+        type: 'number'
       }
     }
   } as const,

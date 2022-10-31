@@ -1,3 +1,4 @@
+// App level TypeScript declarations
 import { Application as ExpressFeathers } from '@feathersjs/express'
 import { HookContext as FeathersHookContext } from '@feathersjs/feathers'
 import '@feathersjs/transport-commons'

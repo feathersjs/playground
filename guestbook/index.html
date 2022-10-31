@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="/node_modules/@feathersjs/client/dist/feathers.js"></script>
+    <script src="/node_modules/socket.io-client/dist/socket.io.dev.js"></script>
+    <script type="module">
+      // Set up socket.io
+      const socket = io({ transports: ['websocket'] })
+      // Initialize a Feathers app
+      const app = feathers()
+
+      // Register socket.io to talk to our server
+      app.configure(feathers.socketio(socket))
+
+      // Form submission handler that sends a new message
+      async function sendMessage() {
+        const messageInput = document.querySelector('#message-text')
+
+        // Create a new message with the input field value
+        await app.service('messages').create({
+          text: messageInput.value,
+        })
+
+        messageInput.value = ''
+      }
+
+      // Renders a single message on the page
+      function addMessage(message) {
+        const messageEl = document.createElement('p')
+        messageEl.innerText = message.text
+        document.querySelector('#main').append(messageEl)
+      }
+
+      const main = async () => {
+        const form = document.querySelector('#main form')
+        form.addEventListener('submit', (e) => sendMessage(e.preventDefault()))
+
+        // Find all existing messages
+        const messages = await app.service('messages').find()
+
+        // Add existing messages to the list
+        messages.forEach(addMessage)
+
+        // Add any newly created message to the list in real-time
+        app.service('messages').on('created', addMessage)
+      }
+
+      window.addEventListener('DOMContentLoaded', main)
+    </script>
+
+    <meta charset="UTF-8" />
+    <title>Feathers Example</title>
+    <link rel="stylesheet" crossorigin="anonymous" href="//unpkg.com/feathers-chat@4.0.0/public/base.css" />
+    <link rel="stylesheet" crossorigin="anonymous" href="//unpkg.com/feathers-chat@4.0.0/public/chat.css" />
+  </head>
+  <body>
+    <main id="main" class="container">
+      <h1>Welcome to Feathers</h1>
+      <h2>The API and Real-time
+        Application Framework</h2>
+      <form class="form">
+        <input type="text" id="message-text" placeholder="Enter message here" />
+        <button type="submit" class="button button-primary">
+          Send message
+        </button>
+      </form>
+
+      <h2>Here are the current messages:</h2>
+    </main>
+    <a href="https://docs.feathersjs.com/">Feathers documentation and guides</a>
+  </body>
+</html>
