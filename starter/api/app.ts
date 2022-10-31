@@ -62,7 +62,9 @@ export const main = async () => {
 
   app.hooks(appHooks) // Global hooks
 
-  app.configure(HolidayBot) // A little bit of holiday fun
+  if (globalThis.process?.env.VITE_HOLIDAY) {
+    app.configure(HolidayBot) // A little bit of holiday fun
+  }
 
   return app
 }

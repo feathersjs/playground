@@ -62,8 +62,8 @@ const loginScreenHTML = `<main class="login container">
 const chatHTML = `<main class="flex flex-column">
   <header class="title-bar flex flex-row flex-center">
     <div class="title-wrapper block center-element">
-    ${store.holiday.emojii} <img class="logo" src="https://raw.githubusercontent.com/feathersjs/feathers/ae85fa216f12f7ff5d15e7039640e27a09989ea4/docs/public/img/feathers-logo-horizontal.svg"
-        alt="Feathers"> ${store.holiday.emojii}
+    ${store.holiday.emojii || ''} <img class="logo" src="https://raw.githubusercontent.com/feathersjs/feathers/ae85fa216f12f7ff5d15e7039640e27a09989ea4/docs/public/img/feathers-logo-horizontal.svg"
+        alt="Feathers"> ${store.holiday.emojii || ''}
     </div>
   </header>
 
@@ -300,7 +300,7 @@ client.service('messages').on('updated', addMessage)
 client.service('users').on('created', addUser)
 
 const main = async (D: Document) => {
-  D.body.style.setProperty("--accent-color", store.holiday.accentColor)
+  store.holiday.accentColor && D.body.style.setProperty("--accent-color", store.holiday.accentColor)
 
   // If DEV, login at boot so we can show the chat window
   if ((await login()) === false && import.meta.env.DEV) {
