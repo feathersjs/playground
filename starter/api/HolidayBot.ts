@@ -48,7 +48,7 @@ const HolidayMessages = [
 async function* spookyAI(text:string) {
   const words = text.split(' ')
   for (const word of words) {
-    await sleep(word.length * 0.69 * Math.random())
+    await sleep(word.length * 0.069 * Math.random())
     yield word
   }
   return  ''
