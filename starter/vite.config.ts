@@ -14,12 +14,8 @@ async function getDevUser() {
     ])))
   } catch { console.debug('Using default dev user') }
   const gi = giRaw.map(v => v.stdout?.trim())
-  if (gi.some(v => v === undefined)) {
-    return
-  } else {
-    const result = { name: gi[0], email: gi[1] }
-    return result
-  }
+  const result = { name: gi[0], email: gi[1] }
+  return result
 }
 
 // https://vitejs.dev/config/#async-config
