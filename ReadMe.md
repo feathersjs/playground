@@ -17,10 +17,11 @@ This is a minimal project with:
 For **documentation** and generating projects see [Feathers Docs](https://dove.feathersjs.com/).
 
 To see a full production app with oAuth, complete schemas, better TypeScript definitions, resolvers for all service events, SQL migrations, etc... Use 
-[feathers-chat](https://github.com/feathersjs/feathers-chat)
+[Feathersjs/Feathers-Chat](https://github.com/feathersjs/feathers-chat)
 
 ## Resources
 
 - [Join us on Discord](https://discord.gg/qa8kez8QBx)
 - [Join us on Twitter](https://twitter.com/feathersjs)
-- [GitHub](https://github.com/feathersjs/feathers)
+- [Star us on GitHub](https://github.com/feathersjs/feathers)
+- [Make a PR on GitHub](https://pr.new/github.com/feathersjs/playground)
