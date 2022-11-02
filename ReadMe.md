@@ -1,18 +1,24 @@
 ## Feathers Playground
 
-This is a set of extremely minimal learning and bug reproduction projects. They also share the following properties:
+### [Try Online on StackBlitz](https://stackblitz.com/fork/github/feathersjs/playground)
+
+A demo feathers-chat project for learning and demonstration purposes.
+
+This is a minimal learning and demonstration and project featuring:
 
 - Gratuitus comments
-- Primarily meant to run on constrained environments like StackBlitz and CodeSandbox.
+- Designed to run well on WebContainers
+- Demonstrates most Feathers concepts once
+- Targets less than 10 files of user facing code, with less than 500 of code total
+- 5 second cold boot times
 
-For generating customized projects with databases, testing and authentication see the [Feathers Docs](https://docs.feathersjs.com/).
+For **documentation** and generating projects see [Feathers Docs](https://dove.feathersjs.com/).
 
-## Project index
+To see a full production app with oAuth, complete schemas, better TypeScript definitions, resolvers for all service events, SQL migrations, etc... Use 
+[feathers-chat](https://github.com/feathersjs/feathers-chat)
 
-### [Starter](https://stackblitz.com/fork/github/feathersjs/playground/tree/main/starter)
+## Resources
 
-The project on the StackBlitz "Create a New Project" page.
-
-### [Vite Chat](https://stackblitz.com/fork/github/feathersjs/playground/tree/main/vite-chat)
-
-Feathers Chat demo app with vite client tooling. 
+- [Join us on Discord](https://discord.gg/qa8kez8QBx)
+- [Join us on Twitter](https://twitter.com/feathersjs)
+- [GitHub](https://github.com/feathersjs/feathers)
