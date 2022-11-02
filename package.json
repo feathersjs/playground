@@ -1,0 +1,9 @@
+{
+  "name": "feathers-playground",
+  "version": "1.0.0",
+  "description": "Feathers 🕊️ starter",
+  "scripts": {
+    "dev": "cd starter && npm run dev || pnpm run dev"
+  },
+  "license": "MIT"
+}
