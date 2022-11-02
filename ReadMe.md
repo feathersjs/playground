@@ -4,12 +4,14 @@
 
 A demo feathers-chat project for learning and demonstration purposes.
 
-This is a minimal learning and demonstration and project featuring:
+This is a minimal project with:
 
+- A real-time chat app and server
 - Gratuitus comments
-- Designed to run well on WebContainers
-- Demonstrates most Feathers concepts once
-- Targets less than 10 files of user facing code, with less than 500 of code total
+- Optimizations for WebContainers
+- Demonstrations for most Feathers concepts
+- Less than ~10 files of user facing code
+- Less than 500 of code total
 - 5 second cold boot times
 
 For **documentation** and generating projects see [Feathers Docs](https://dove.feathersjs.com/).
