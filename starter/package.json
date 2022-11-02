@@ -1,0 +1,64 @@
+{
+  "name": "feathers-vite-chat",
+  "description": "A FeathersJS real-time chat application written in TypeScript",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "npm run i && vite",
+    "dev:client": "VITE_SSG=off vite",
+    "dev:server": "npx tsx watch --clear-screen=false src/index.ts",
+    "preview": "vite preview",
+    "test:server": "npx typescript --noEmit && npx vitest run",
+    "test:client": "npx typescript --noEmit",
+    "build": "vite build --outDir dist/client",
+    "start": "npx tsx src/index.ts",
+    "update": "npx npm-check-updates -u",
+    "i": "ls node_modules &> /dev/null || pnpm i || npx pnpm i",
+    "force-checkout": "npx g4c checkout --force HEAD",
+    "switch-to-javascript-mode": "npx typescript -p tsconfig.node.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feathersjs/playground.git",
+    "directory": "vite-chat"
+  },
+  "engines": {
+    "node": ">= 16"
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "pre",
+    "@feathersjs/authentication-local": "pre",
+    "@feathersjs/client": "pre",
+    "@feathersjs/configuration": "pre",
+    "@feathersjs/errors": "pre",
+    "@feathersjs/express": "pre",
+    "@feathersjs/feathers": "pre",
+    "@feathersjs/schema": "pre",
+    "@feathersjs/socketio": "pre",
+    "cors": "^2.8.5",
+    "feathers-database": "npm:@feathersjs/memory@pre",
+    "helmet": "^5.1.0",
+    "pnpm": "^7.14.1",
+    "socket.io-client": "^4.5.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/jsonwebtoken": "^8.5.8",
+    "feathers-vite": "^1.0.5",
+    "node-fetch": "^3.2.9",
+    "vite": "^3.1.0"
+  },
+  "stackblitz": {
+    "installDependencies": false,
+    "startCommand": "npm run dev"
+  },
+  "prettier": {
+    "x-src": "@github/prettier-config",
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "none",
+    "arrowParens": "avoid"
+  }
+}

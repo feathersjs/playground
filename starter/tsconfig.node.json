@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "composite": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "allowSyntheticDefaultImports": true,
+    "removeComments": false, // Remove if comfortable with TypeScript
+    "outDir": "src-js"
+  },
+  "include": ["api/**/*", "test/**/*", "vite.config.ts"]
+}
