@@ -1,4 +1,4 @@
-run = ["bash", "./.config/main.sh"]
+run = ["pnpm", "dev"]
 
 entrypoint = "ReadMe.md"
 
