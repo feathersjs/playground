@@ -13,15 +13,9 @@ export default function (app: Application) {
   })
 
   app.on('login', (authResult: any, { connection: conn }: any) => {
-    if (conn) {
-      // REST has no real-time connection
-      // const user = authResult.user
+    if (conn) { // REST has no real-time connection
       app.channel('anonymous').leave(conn)
       app.channel('authenticated').join(conn)
-
-      // if(user.isAdmin) { app.channel('admins').join(conn) }
-      // if(Array.isArray(user.rooms)) user.rooms.forEach(r => app.channel(`rooms/${r.id}`).join(conn))
-      // app.channel(`DM/${user.id}`).join(conn) // DMs
     }
   })
 
@@ -34,14 +28,4 @@ export default function (app: Application) {
     }
     return app.channel('authenticated')
   })
-
-  // Publish the `users` service, `created` event, to the channel "admins"
-  // app.service('users').publish('created', () => app.channel('admins'))
-
-  // app.service('messages').publish(() => {
-  //   return [
-  //     app.channel(`userIds/${data.createdBy}`),
-  //     app.channel(`emails/${data.recipientEmail}`)
-  //   ]
-  // })
 }

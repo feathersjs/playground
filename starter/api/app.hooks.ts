@@ -36,6 +36,9 @@ export default {
         const warn = ['not-authenticated', 'not-found']
         if (!warn.includes(c.error.className)) {
           console.error(`🦋  ${FCI(c)}`, c.error)
+          console.log('Original', c.params?.resolve?.originalContext)
+          console.trace()
+          // debugger
         } else {
           console.warn(`🦤  ${FCI(c)}`, c.error.message)
         }

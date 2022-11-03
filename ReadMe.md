@@ -9,7 +9,7 @@ This is a minimal project with:
 - A real-time chat app and server
 - Gratuitus comments
 - Optimizations for WebContainers
-- Demonstrations for most Feathers concepts
+- Introductory demonstrations for most Feathers concepts
 - Less than ~10 files of user facing code
 - Less than 500 of code total
 - 5 second cold boot times

@@ -17,8 +17,7 @@ const socket = io(import.meta.env.SOCKET_URL, {
 // Initialize our Feathers client application through Socket.io
 const client = feathers()
 client.configure(socketio(socket))
-const storageKey = 'feathers-jwt'
-client.configure(authentication({ storageKey, storage: sessionStorage }))
+client.configure(authentication()) // if you specify storage, you're in chage of it
 
 // UNSAFELY safely escape HTML
 const escape = (str: any) =>
@@ -136,12 +135,8 @@ const addMessage = (message: MessagesResult) => {
     : ''
 
   if (chat) {
-    const img = user
-      ? `<img src="${user.avatar}" alt="${user.name}" class="avatar" crossorigin="anonymous">`
-      : ''
-    const userName = user
-      ? `<span class="username font-600">${escape(user.name || '')}</span>`
-      : ''
+    const img = `<img src="${user.avatar}" alt="${user.name}" class="avatar" crossorigin="anonymous">`
+    const userName = `<span class="username font-600">${escape(user.name || '')}</span>`
     chat.innerHTML += `<div class="${messageId} message flex flex-row">${img}
       <div class="message-wrapper">
         <p class="message-header"> ${userName}
@@ -196,9 +191,9 @@ const getCredentials = () => {
   const defDev = { email: 'john@doe.com', password: 'password'}
   const dev = import.meta.env.DEV ? { ...defDev, ...JSON.parse(import.meta.env.VITE_USER || '') } : false
   const email =
-    document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
+    document.querySelector<HTMLInputElement>('[name="email"]')?.value || '' + Math.random()
   const password =
-    document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
+    document.querySelector<HTMLInputElement>('[name="password"]')?.value || '' + Math.random()
 
   return email === '' && dev ? dev : { email, password }
 }
@@ -213,8 +208,9 @@ const login = async (credentials?: any): Promise<boolean> => {
         ...credentials
       })
     } else if (sessionStorage.getItem(storageKey)) {
-      // TODO: Why does this try to authenticate without a JWT... causing errors in the server
-      await client.reAuthenticate()
+      try { await client.reAuthenticate() } catch {
+        return false
+      }
     } else {
       return false
     }
@@ -224,16 +220,13 @@ const login = async (credentials?: any): Promise<boolean> => {
     return true
   } catch (error) {
     // If we got an error, show the login page
-    await logout()
+    await showLogout()
     return false
   }
 }
 
-const logout = async () => {
-  try {
-    await client.logout()
-  } catch (e) { }
-  sessionStorage.removeItem('feathers-jwt')
+const showLogout = async () => {
+  try { await client.logout() } catch { }
   showLogin()
 }
 
@@ -242,12 +235,13 @@ const signup = async () => {
 
   try {
     // First create the user
+    try { await client.logout() } catch {}
     await client.service('users').create(credentials)
 
     // If successful log them in
     await login(credentials)
   } catch (e) {
-    await logout()
+    await showLogout()
     console.log('signup failed', e)
   }
 }
@@ -276,7 +270,7 @@ addEventListener('#login', 'click', async () => {
 
 // "Logout" button click handler
 addEventListener('#logout', 'click', async () => {
-  logout()
+  showLogout()
 })
 
 // "Send" message form submission handler
