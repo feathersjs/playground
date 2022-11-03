@@ -13,14 +13,14 @@
     "build": "vite build --outDir dist/client",
     "start": "npx tsx api/index.ts",
     "update": "npx npm-check-updates -u",
-    "i": "ls node_modules &> /dev/null || pnpm i || npx pnpm i",
+    "i": "ls node_modules &> /dev/null || npm i",
     "force-checkout": "npx g4c checkout --force HEAD",
     "switch-to-javascript-mode": "npx typescript -p tsconfig.node.json"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/feathersjs/playground.git",
-    "directory": "vite-chat"
+    "directory": "starter"
   },
   "engines": {
     "node": ">= 16"
@@ -38,7 +38,6 @@
     "cors": "^2.8.5",
     "feathers-database": "npm:@feathersjs/memory@pre",
     "helmet": "^5.1.0",
-    "pnpm": "^7.14.1",
     "socket.io-client": "^4.5.1"
   },
   "devDependencies": {
