@@ -128,7 +128,7 @@ const addMessage = (message: MessagesResult) => {
   }
 
   // Escape HTML to prevent XSS attacks
-  const text = escape(message.text) // task: use DOM instead
+  const text = message.userId === 0 ? message.text : escape(message.text) // task: use DOM instead
   const dtf = new Intl.DateTimeFormat(undefined, { timeStyle: 'short' })
   const prettyD = message.createdAt
     ? dtf.format(new Date(message.createdAt as string))
@@ -212,7 +212,7 @@ const login = async (credentials?: any): Promise<boolean> => {
       })
     } else {
       try { 
-        await client.reAuthenticate()
+        await client.reAuthenticate(true) // force
       } catch {
         return false
       }
@@ -229,6 +229,8 @@ const login = async (credentials?: any): Promise<boolean> => {
 }
 
 const showLogout = async () => {
+  console.log('removing access token from storage')
+  await client.authentication.removeAccessToken()
   try { await client.logout() } catch { }
   showLogin()
 }

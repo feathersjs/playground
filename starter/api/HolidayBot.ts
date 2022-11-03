@@ -32,8 +32,10 @@ export const HolidayAssets = {
 
 const HolidayMessages = [
   '<a href="https://discord.gg/qa8kez8QBx">Join our discord!</a>',
-  '<a href="https://github.com/feathersjs/feathers">Join our discord!</a>',
-  '<a href="https://twitter.com/feathersjs">Join our discord!</a>'
+  '<a href="https://github.com/feathersjs/feathers">Starr us on GitHub!</a>',
+  '<a href="https://twitter.com/feathersjs">Follow us on Twitter!</a>',
+  '<a href="https://dove.feathersjs.com/guides/basics/starting.html">Read our docs!</a>',
+  '<a href="https://dove.feathersjs.com/awesome/">Checkout awesome Feathers community packages!</a>',
 ]
 
 const sendMessage = async (userId, fullText) => {
@@ -42,8 +44,6 @@ const sendMessage = async (userId, fullText) => {
   const messageId = message[messages.id]
   delete message[messages.id] // task: user a resolver to remove these before validation
   delete message.user
-  await sleep(1)
-  messages.update(messageId, {...message, text: fullText.replace(/$/, `. ${getRandom(HolidayAssets.emojiis)}`)})
 }
 
 export const HolidayBot = async (app: Application) => {
@@ -60,7 +60,7 @@ export const HolidayBot = async (app: Application) => {
       // REST has no real-time connection
       if (lastMessage < Date.now() - 2 * 60 * 1000) {
         await sleep(1)
-        let text = "**Gobble gobble gobble**"
+        let text = `Gobble gobble, ${authResult.user.name}`
         await sendMessage(userId, text)
       }
 
@@ -71,9 +71,10 @@ export const HolidayBot = async (app: Application) => {
   })
 
   app.service('messages').on('created', async m => {
-    await sleep(1) 
+    await sleep(0.420) 
     if (userId !== m.userId) {
-      sendMessage(userId, getNext(HolidayMessages))
+      const emo = getRandom(HolidayAssets.emojiis)
+      sendMessage(userId, emo + ' ' + getNext(HolidayMessages) + ' ' + emo)
     }
   })
 }

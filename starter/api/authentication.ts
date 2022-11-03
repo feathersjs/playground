@@ -1,3 +1,4 @@
+// https://docs.feathersjs.com/api/authentication/client.html
 import { AuthenticationService, JWTStrategy } from '@feathersjs/authentication'
 import { LocalStrategy } from '@feathersjs/authentication-local'
 
