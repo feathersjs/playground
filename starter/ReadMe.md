@@ -1,6 +1,6 @@
 ## Feathers Playground
 
-### [Try Online on StackBlitz](https://stackblitz.com/fork/github/feathersjs/playground)
+### [Try Online on StackBlitz](https://stackblitz.com/fork/github/feathersjs/playground/tree/main/starter)
 
 A demo feathers-chat project for learning and demonstration purposes.
 
