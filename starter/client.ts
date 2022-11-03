@@ -17,7 +17,7 @@ const socket = io(import.meta.env.SOCKET_URL, {
 // Initialize our Feathers client application through Socket.io
 const client = feathers()
 client.configure(socketio(socket))
-client.configure(authentication()) // if you specify storage, you're in chage of it
+client.configure(authentication())
 
 // UNSAFELY safely escape HTML
 const escape = (str: any) =>
@@ -190,13 +190,16 @@ const showChat = async () => {
 const getCredentials = () => {
   const defDev = { email: 'john@doe.com', password: 'password'}
   const dev = import.meta.env.DEV ? { ...defDev, ...JSON.parse(import.meta.env.VITE_USER || '') } : false
-  const email =
-    document.querySelector<HTMLInputElement>('[name="email"]')?.value || '' + Math.random()
-  const password =
-    document.querySelector<HTMLInputElement>('[name="password"]')?.value || '' + Math.random()
+  const email = document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
+  const password = document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
+    document.querySelector<HTMLInputElement>('[name="password"]')?.value || ('' + Math.random())
 
-  return email === '' && dev ? dev : { email, password }
-}
+  if (dev) {
+    return { email: email || dev.email, password: password || dev.password }
+  } else {
+    return { email, password }
+  }
+ }
 
 // Log in either using the given email/password or the token from storage
 const login = async (credentials?: any): Promise<boolean> => {
@@ -208,7 +211,11 @@ const login = async (credentials?: any): Promise<boolean> => {
         ...credentials
       })
     } else {
-      return false
+      try { 
+        await client.reAuthenticate()
+      } catch {
+        return false
+      }
     }
 
     // If successful, show the chat page
@@ -231,7 +238,7 @@ const signup = async () => {
 
   try {
     // First create the user
-    try { await client.logout() } catch {}
+    await client.configure(authentication())
     await client.service('users').create(credentials)
 
     // If successful log them in
@@ -293,7 +300,7 @@ const main = async (D: Document) => {
   store.holiday.accentColor && D.body.style.setProperty("--accent-color", store.holiday.accentColor)
 
   // If DEV, login at boot so we can show the chat window
-  if ((await login()) === false && import.meta.env.DEV) {
+  if ((await login()) === false && import.meta.env.DEV && (await login(getCredentials())) === false) {
     signup()
   }
 }
