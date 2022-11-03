@@ -26,7 +26,7 @@ export const HolidayAssets = {
     name: 'Mr. Globbles',
     email: 'happy@turkey.com',
     password: 'HappyHolidays',
-    avatar: 'https://raw.githubusercontent.com/feathersjs/playground/assets/holiday.svg'
+    avatar: 'https://github.com/feathersjs/playground/blob/20e1af6488bd1002f4b3918942dc52f97068a067https://raw.githubusercontent.com/feathersjs/playground/20e1af6488bd1002f4b3918942dc52f97068a067/assets/holiday.svg'
   }
 }
 
