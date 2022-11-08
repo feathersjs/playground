@@ -3,7 +3,7 @@
 import {
   default as feathers,
   socketio,
-  authentication
+  authentication,
 } from '@feathersjs/client'
 import io from 'socket.io-client'
 import type { MessagesResult } from './api/services/messages/messages.schema.js'
@@ -12,7 +12,7 @@ import type { UsersData } from './api/services/users/users.schema.js'
 // Establish a Socket.io connection
 const socket = io(import.meta.env.SOCKET_URL, {
   transports: ['websocket'],
-  reconnectionDelay: import.meta.env.DEV ? 60 : 1000
+  reconnectionDelay: import.meta.env.DEV ? 60 : 1000,
 })
 // Initialize our Feathers client application through Socket.io
 const client = feathers()
@@ -23,10 +23,11 @@ client.configure(authentication())
 const escape = (str: any) =>
   str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
-
 const appEl = document.getElementById('app') as HTMLDivElement
 const store = {
-  holiday: import.meta.env.VITE_HOLIDAY ? JSON.parse(import.meta.env.VITE_HOLIDAY) : {}
+  holiday: import.meta.env.VITE_HOLIDAY
+    ? JSON.parse(import.meta.env.VITE_HOLIDAY)
+    : {},
 }
 const loginScreenHTML = `<main class="login container">
   <div class="row">
@@ -61,7 +62,9 @@ const loginScreenHTML = `<main class="login container">
 const chatHTML = `<main class="flex flex-column">
   <header class="title-bar flex flex-row flex-center">
     <div class="title-wrapper block center-element">
-    ${store.holiday.emojii || ''} <img class="logo" crossorigin="anonymous" src="https://raw.githubusercontent.com/feathersjs/feathers/ae85fa216f12f7ff5d15e7039640e27a09989ea4/docs/public/img/feathers-logo-horizontal.svg"
+    ${
+      store.holiday.emojii || ''
+    } <img class="logo" crossorigin="anonymous" src="https://raw.githubusercontent.com/feathersjs/feathers/ae85fa216f12f7ff5d15e7039640e27a09989ea4/docs/public/img/feathers-logo-horizontal.svg"
         alt="Feathers"> ${store.holiday.emojii || ''}
     </div>
   </header>
@@ -118,11 +121,11 @@ const addMessage = (message: MessagesResult) => {
   const user = message.user || (undefined as any)
   console.log(message)
   const id = message['_id'] || (message as any)['id'] // support different DBs/APIs. Task: Replace with a trivial resolver that always returns _id
-  const messageId = 'messageId-'+ id
+  const messageId = 'messageId-' + id
   const chat = document.querySelector('.chat') as HTMLDivElement
-  const messageEl = chat.querySelector('.'+ messageId)
+  const messageEl = chat.querySelector('.' + messageId)
   if (messageEl) {
-    const contentEl = messageEl.querySelector('.'+contentClass) || {} as any
+    const contentEl = messageEl.querySelector('.' + contentClass) || ({} as any)
     contentEl.textContent = message.text
     return
   }
@@ -136,7 +139,9 @@ const addMessage = (message: MessagesResult) => {
 
   if (chat) {
     const img = `<img src="${user.avatar}" alt="${user.name}" class="avatar" crossorigin="anonymous">`
-    const userName = `<span class="username font-600">${escape(user.name || '')}</span>`
+    const userName = `<span class="username font-600">${escape(
+      user.name || ''
+    )}</span>`
     chat.innerHTML += `<div class="${messageId} message flex flex-row">${img}
       <div class="message-wrapper">
         <p class="message-header"> ${userName}
@@ -171,8 +176,8 @@ const showChat = async () => {
   const messages = await client.service('messages').find({
     query: {
       $sort: { createdAt: -1 },
-      $limit: 25
-    }
+      $limit: 25,
+    },
   })
 
   // We want to show the newest message last
@@ -183,23 +188,27 @@ const showChat = async () => {
 
   // Add each user to the list
   users.data.forEach(addUser)
-
 }
 
 // Retrieve email/password object from the login/signup page
 const getCredentials = () => {
-  const defDev = { email: 'john@doe.com', password: 'password'}
-  const dev = import.meta.env.DEV ? { ...defDev, ...JSON.parse(import.meta.env.VITE_USER || '') } : false
-  const email = document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
-  const password = document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
-    document.querySelector<HTMLInputElement>('[name="password"]')?.value || ('' + Math.random())
+  const defDev = { email: 'john@doe.com', password: 'password' }
+  const dev = import.meta.env.DEV
+    ? { ...defDev, ...JSON.parse(import.meta.env.VITE_DEV_USER || '') }
+    : false
+  const email =
+    document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
+  const password =
+    document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
+  document.querySelector<HTMLInputElement>('[name="password"]')?.value ||
+    '' + Math.random()
 
   if (dev) {
     return { email: email || dev.email, password: password || dev.password }
   } else {
     return { email, password }
   }
- }
+}
 
 // Log in either using the given email/password or the token from storage
 const login = async (credentials?: any): Promise<boolean> => {
@@ -208,10 +217,10 @@ const login = async (credentials?: any): Promise<boolean> => {
       // log in with the `local` strategy using the credentials we got
       await client.authenticate({
         strategy: 'local',
-        ...credentials
+        ...credentials,
       })
     } else {
-      try { 
+      try {
         await client.reAuthenticate(true) // force
       } catch {
         return false
@@ -231,7 +240,9 @@ const login = async (credentials?: any): Promise<boolean> => {
 const showLogout = async () => {
   console.log('removing access token from storage')
   await client.authentication.removeAccessToken()
-  try { await client.logout() } catch { }
+  try {
+    await client.logout()
+  } catch {}
   showLogin()
 }
 
@@ -287,7 +298,7 @@ addEventListener('#send-message', 'submit', async (ev: any) => {
 
   // Create a new message and then clear the input field
   await client.service('messages').create({
-    text: input.value
+    text: input.value,
   })
 
   input.value = ''
@@ -299,10 +310,15 @@ client.service('messages').on('updated', addMessage)
 client.service('users').on('created', addUser)
 
 const main = async (D: Document) => {
-  store.holiday.accentColor && D.body.style.setProperty("--accent-color", store.holiday.accentColor)
+  store.holiday.accentColor &&
+    D.body.style.setProperty('--accent-color', store.holiday.accentColor)
 
   // If DEV, login at boot so we can show the chat window
-  if ((await login()) === false && import.meta.env.DEV && (await login(getCredentials())) === false) {
+  if (
+    (await login()) === false &&
+    import.meta.env.DEV &&
+    (await login(getCredentials())) === false
+  ) {
     signup()
   }
 }
