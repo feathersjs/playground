@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import { feathers, getDevUser } from 'feathers-vite'
-import './api/HolidayBot'
+import './server/HolidayBot'
 
 // https://vitejs.dev/config/#async-config
 export default defineConfig(async ({ command, mode }) => {
