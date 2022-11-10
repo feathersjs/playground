@@ -320,6 +320,8 @@ const main = async (D: Document) => {
     (await login(getCredentials())) === false
   ) {
     signup()
+  } else {
+    showLogin()
   }
 }
-main(document)
+main(document) // Task: make this run on connect

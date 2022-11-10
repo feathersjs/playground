@@ -1,10 +1,6 @@
-- Installing package code-stats
-success Install finished in 3.437s
-
 
 Type | Files | Lines
------|-------|---------
-md   | 2     | 30 (73%)
-json | 1     | 11 (27%)
------|-------|---------
-All  | 3     | 41
+-----|-------|------------
+ts   | 17    | 1104 (100%)
+-----|-------|------------
+All  | 17    | 1104

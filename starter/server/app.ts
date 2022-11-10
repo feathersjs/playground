@@ -36,8 +36,8 @@ export const main = async () => {
   app.use(json())
   app.use(urlencoded({ extended: true }))
 
-  if (globalThis.process?.env?.NODE_ENV === 'production') {
-    app.use('/', staticFiles(app.get('dist')))
+  if (globalThis.process?.env.NODE_ENV !== 'development') {
+    app.use('/', staticFiles('dist/client'))
   }
 
   // Set up Plugins and providers

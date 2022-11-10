@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Feathers 🕊️ starter",
   "scripts": {
-    "dev": "cd starter && npm run dev || pnpm run dev",
-    "code-stats": "npx code-stats > code-stats.md"
+    "dev": "cd starter && npm run dev",
+    "start": "cd starter && npm run build && npm run start",
+    "code-stats": "npx code-stats starter/server starter/client.ts > code-stats.md"
   },
   "license": "MIT",
   "prettier": "@github/prettier-config"
