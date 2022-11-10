@@ -2,7 +2,7 @@
 
 <p align="center">
   <a href="https://feathersjs.com" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="https://github.com/feathersjs/feathers/blob/2b89e0b7fceb42f92c9139f16f3291fa3ff560f1/docs/public/feathersjs.svg" alt="Feathers logo">
+    <img width="180" src="https://raw.githubusercontent.com/feathersjs/feathers/2b89e0b7fceb42f92c9139f16f3291fa3ff560f1/docs/public/feathersjs.svg" alt="Feathers logo">
   </a>
 </p>
 <br/>
