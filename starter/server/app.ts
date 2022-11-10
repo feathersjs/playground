@@ -36,7 +36,7 @@ export const main = async () => {
   app.use(json())
   app.use(urlencoded({ extended: true }))
 
-  if (!import.meta.env?.DEV) {
+  if (globalThis.process?.env.NODE_ENV !== 'development') {
     app.use('/', staticFiles('dist/client'))
   }
 
