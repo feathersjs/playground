@@ -32,10 +32,10 @@ export const HolidayAssets = {
 
 const HolidayMessages = [
   '<a href="https://discord.gg/qa8kez8QBx">Join our discord!</a>',
-  '<a href="https://github.com/feathersjs/feathers">Starr us on GitHub!</a>',
+  '<a href="https://github.com/feathersjs/feathers">Star us on GitHub!</a>',
   '<a href="https://twitter.com/feathersjs">Follow us on Twitter!</a>',
   '<a href="https://dove.feathersjs.com/guides/basics/starting.html">Read our docs!</a>',
-  '<a href="https://dove.feathersjs.com/awesome/">Checkout awesome Feathers community packages!</a>',
+  '<a href="https://dove.feathersjs.com/awesome/">Checkout our Awesome Feathers community packages!</a>',
 ]
 
 const sendMessage = async (userId, fullText) => {
