@@ -4,7 +4,7 @@
   "description": "Feathers 🕊️ starter",
   "scripts": {
     "dev": "cd starter && npm run dev",
-    "start": "cd starter && npm run build && npm run start",
+    "start": "cd starter && npm run i && npm run build && npm run start",
     "code-stats": "npx code-stats starter/server starter/client.ts > code-stats.md"
   },
   "license": "MIT",
