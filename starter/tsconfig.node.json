@@ -5,7 +5,7 @@
     "moduleResolution": "Node",
     "allowSyntheticDefaultImports": true,
     "removeComments": false, // Remove if comfortable with TypeScript
-    "outDir": "src-js"
+    "outDir": "dist/server"
   },
   "include": ["api/**/*", "test/**/*", "vite.config.ts"]
 }
