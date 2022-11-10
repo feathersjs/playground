@@ -1,11 +1,14 @@
 hidden=[".config"]
 
-run = ["npm", "run", "dev"]
+run = ["npm", "run", "start"]
 
 entrypoint = "README.md"
 
 [nix]
 channel = "stable-22_05"
+
+[env]
+npm_config_yes=true
 
 [languages.html]
 pattern = "**/*.html"
