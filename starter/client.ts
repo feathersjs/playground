@@ -1,18 +1,14 @@
 /// <reference types="vite/client" />
 
-import {
-  default as feathers,
-  socketio,
-  authentication,
-} from '@feathersjs/client'
+import {default as feathers, socketio, authentication} from '@feathersjs/client'
 import io from 'socket.io-client'
-import type { MessagesResult } from './api/services/messages/messages.schema.js'
-import type { UsersData } from './api/services/users/users.schema.js'
+import type {MessagesResult} from './api/services/messages/messages.schema.js'
+import type {UsersData} from './api/services/users/users.schema.js'
 
 // Establish a Socket.io connection
-const socket = io(import.meta.env.SOCKET_URL, {
+const socket = io(import.meta.env.VITE_FV_URL, {
   transports: ['websocket'],
-  reconnectionDelay: import.meta.env.DEV ? 60 : 1000,
+  reconnectionDelay: import.meta.env.DEV ? 60 : 1000
 })
 // Initialize our Feathers client application through Socket.io
 const client = feathers()
@@ -20,14 +16,11 @@ client.configure(socketio(socket))
 client.configure(authentication())
 
 // UNSAFELY safely escape HTML
-const escape = (str: any) =>
-  str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const escape = (str: any) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 const appEl = document.getElementById('app') as HTMLDivElement
 const store = {
-  holiday: import.meta.env.VITE_HOLIDAY
-    ? JSON.parse(import.meta.env.VITE_HOLIDAY)
-    : {},
+  holiday: import.meta.env.VITE_HOLIDAY ? JSON.parse(import.meta.env.VITE_HOLIDAY) : {}
 }
 const loginScreenHTML = `<main class="login container">
   <div class="row">
@@ -99,6 +92,9 @@ const chatHTML = `<main class="flex flex-column">
 // Add a new user to the list
 const addUser = (user: UsersData) => {
   const userList = document.querySelector('.user-list') as HTMLDivElement
+  if (userList === null) {
+    return // we can't add users without a user screen
+  }
   userList.innerHTML += `<li>
     <a class="block relative" href="#">
       <img src="${user.avatar}" alt="" class="avatar" crossorigin="anonymous">
@@ -108,9 +104,7 @@ const addUser = (user: UsersData) => {
 
   // Update the number of users
   const userCount = document.querySelectorAll('.user-list li').length
-  const onlineEl = document.querySelector(
-    '.online-count'
-  ) as HTMLParagraphElement
+  const onlineEl = document.querySelector('.online-count') as HTMLParagraphElement
   onlineEl.innerText = '' + userCount
 }
 
@@ -123,25 +117,23 @@ const addMessage = (message: MessagesResult) => {
   const id = message['_id'] || (message as any)['id'] // support different DBs/APIs. Task: Replace with a trivial resolver that always returns _id
   const messageId = 'messageId-' + id
   const chat = document.querySelector('.chat') as HTMLDivElement
-  const messageEl = chat.querySelector('.' + messageId)
+  const messageEl = chat && chat.querySelector('.' + messageId)
   if (messageEl) {
     const contentEl = messageEl.querySelector('.' + contentClass) || ({} as any)
     contentEl.textContent = message.text
     return
+  } else if (chat === null) {
+    return // if there is no chat screen, we can't add messages
   }
 
   // Escape HTML to prevent XSS attacks
   const text = message.userId === 0 ? message.text : escape(message.text) // task: use DOM instead
-  const dtf = new Intl.DateTimeFormat(undefined, { timeStyle: 'short' })
-  const prettyD = message.createdAt
-    ? dtf.format(new Date(message.createdAt as string))
-    : ''
+  const dtf = new Intl.DateTimeFormat(undefined, {timeStyle: 'short'})
+  const prettyD = message.createdAt ? dtf.format(new Date(message.createdAt as string)) : ''
 
   if (chat) {
     const img = `<img src="${user.avatar}" alt="${user.name}" class="avatar" crossorigin="anonymous">`
-    const userName = `<span class="username font-600">${escape(
-      user.name || ''
-    )}</span>`
+    const userName = `<span class="username font-600">${escape(user.name || '')}</span>`
     chat.innerHTML += `<div class="${messageId} message flex flex-row">${img}
       <div class="message-wrapper">
         <p class="message-header"> ${userName}
@@ -160,10 +152,7 @@ const addMessage = (message: MessagesResult) => {
 const showLogin = (error?: any) => {
   const headingEl = document.querySelector('.heading')
   if (document.querySelectorAll('.login').length && error && headingEl) {
-    headingEl.insertAdjacentHTML(
-      'beforeend',
-      `<p>There was an error: ${error.message}</p>`
-    )
+    headingEl.insertAdjacentHTML('beforeend', `<p>There was an error: ${error.message}</p>`)
   }
   appEl.innerHTML = loginScreenHTML
 }
@@ -175,9 +164,9 @@ const showChat = async () => {
   // Find the latest 25 messages. They will come with the newest first
   const messages = await client.service('messages').find({
     query: {
-      $sort: { createdAt: -1 },
-      $limit: 25,
-    },
+      $sort: {createdAt: -1},
+      $limit: 25
+    }
   })
 
   // We want to show the newest message last
@@ -192,21 +181,16 @@ const showChat = async () => {
 
 // Retrieve email/password object from the login/signup page
 const getCredentials = () => {
-  const defDev = { email: 'john@doe.com', password: 'password' }
-  const dev = import.meta.env.DEV
-    ? { ...defDev, ...JSON.parse(import.meta.env.VITE_DEV_USER || '') }
-    : false
-  const email =
-    document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
-  const password =
-    document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
-  document.querySelector<HTMLInputElement>('[name="password"]')?.value ||
-    '' + Math.random()
+  const defDev = {email: 'you@example.com', password: 'password'}
+  const dev = import.meta.env.DEV ? {...defDev, ...JSON.parse(import.meta.env.VITE_FV_DEV_USER || '')} : false
+  const email = document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
+  const password = document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
+  document.querySelector<HTMLInputElement>('[name="password"]')?.value || '' + Math.random()
 
   if (dev) {
-    return { email: email || dev.email, password: password || dev.password }
+    return {email: email || dev.email, password: password || dev.password}
   } else {
-    return { email, password }
+    return {email, password}
   }
 }
 
@@ -217,7 +201,7 @@ const login = async (credentials?: any): Promise<boolean> => {
       // log in with the `local` strategy using the credentials we got
       await client.authenticate({
         strategy: 'local',
-        ...credentials,
+        ...credentials
       })
     } else {
       try {
@@ -262,11 +246,7 @@ const signup = async () => {
   }
 }
 
-const addEventListener = (
-  selector: string,
-  event: string,
-  handler: Function
-) => {
+const addEventListener = (selector: string, event: string, handler: Function) => {
   document.addEventListener(event, async (ev: any) => {
     if (ev?.target?.closest(selector)) {
       handler(ev)
@@ -298,30 +278,25 @@ addEventListener('#send-message', 'submit', async (ev: any) => {
 
   // Create a new message and then clear the input field
   await client.service('messages').create({
-    text: input.value,
+    text: input.value
   })
 
   input.value = ''
 })
 
-// Real-time event listeners for messages and users
-client.service('messages').on('created', addMessage)
-client.service('messages').on('updated', addMessage)
-client.service('users').on('created', addUser)
+const main = async () => {
+  // Real-time event listeners for messages and users
+  client.service('messages').on('created', addMessage)
+  client.service('messages').on('updated', addMessage)
+  client.service('users').on('created', addUser)
 
-const main = async (D: Document) => {
-  store.holiday.accentColor &&
-    D.body.style.setProperty('--accent-color', store.holiday.accentColor)
+  store.holiday.accentColor && document.body.style.setProperty('--accent-color', store.holiday.accentColor)
 
-  // If DEV, login at boot so we can show the chat window
-  if (
-    (await login()) === false &&
-    import.meta.env.DEV &&
-    (await login(getCredentials())) === false
-  ) {
-    signup()
-  } else {
-    showLogin()
+  // Automatically login
+  // - First attempt to reauthenticate with jwt cookie
+  // - If DEV, login with default credentials
+  if ((await login()) === false && import.meta.env.DEV && (await login(getCredentials())) === false) {
+    await signup()
   }
 }
-main(document) // Task: make this run on connect
+globalThis.addEventListener('DOMContentLoaded', main)

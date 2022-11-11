@@ -2,47 +2,50 @@
 <html lang="en">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0" />
     <title>FeathersJS chat</title>
+    <script type="module" src="./client.ts"></script>
     <link
-      rel="stylesheet" crossorigin="anonymous"
+      rel="stylesheet"
+      crossorigin="anonymous"
       href="//cdn.rawgit.com/feathersjs/feathers-chat/v4.0.0/public/base.css"
     />
     <link
-      rel="stylesheet" crossorigin="anonymous"
+      rel="stylesheet"
+      crossorigin="anonymous"
       href="//cdn.rawgit.com/feathersjs/feathers-chat/v4.0.0/public/chat.css"
     />
     <style>
-    :root {
-      --accent-color: #be1193;
-    }
-    header {
-     font-size: 2rem;
-    }
-    header.title-bar img.logo {
-      vertical-align: middle;
-      width: auto;
-      height: 2rem;
-    }
-    aside.sidebar .online-count, a {
-      color: var(--accent-color);
-    }
+      :root {
+        --accent-color: #be1193;
+      }
+      header {
+        font-size: 2rem;
+      }
+      header.title-bar img.logo {
+        vertical-align: middle;
+        width: auto;
+        height: 2rem;
+      }
+      aside.sidebar .online-count,
+      a {
+        color: var(--accent-color);
+      }
 
-    .button-primary:hover, .button-primary:focus, .button-primary {
-      background-color: var(--accent-color);
-    }
-    .button-primary:hover, .button-primary:focus {
-      filter: brightness(0.8);
-    }
+      .button-primary:hover,
+      .button-primary:focus,
+      .button-primary {
+        background-color: var(--accent-color);
+      }
+      .button-primary:hover,
+      .button-primary:focus {
+        filter: brightness(0.8);
+      }
     </style>
   </head>
   <body>
     <div id="app" class="flex flex-column">
       <h1>Connecting...</h1>
     </div>
-    <script type="module" src="./client.ts"></script>
   </body>
 </html>

@@ -11,7 +11,6 @@
 
 interface ImportMetaEnv {
   readonly VITE_HOLIDAY: string
-  readonly VITE_DEV_USER: string
 }
 
 interface ImportMeta {
