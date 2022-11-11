@@ -292,11 +292,13 @@ const main = async () => {
 
   store.holiday.accentColor && document.body.style.setProperty('--accent-color', store.holiday.accentColor)
 
-  // Automatically login
-  // - First attempt to reauthenticate with jwt cookie
-  // - If DEV, login with default credentials
-  if ((await login()) === false && import.meta.env.DEV && (await login(getCredentials())) === false) {
-    await signup()
+  // - If DEV, login w jwt, login w dev user, or make dev user.
+  // - else, login w jwt, or show login
+  if (import.meta.env.DEV && await login() === false && await login(getCredentials()) === false) {
+      await signup() // attempt to signup with dev creds
+  } else if (await login() === false) {
+    showLogin()
   }
+  
 }
 globalThis.addEventListener('DOMContentLoaded', main)
