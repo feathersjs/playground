@@ -18,15 +18,15 @@ const getNext = (e: ArrayLike<string>): string => {
 }
 
 export const HolidayAssets = {
-  name: 'Thanksgivings',
-  emojii: '🦃',
-  emojiis: ['🎄','🎅','☃️','🎁','❄️','🌨️','🧝‍♀️','🔔'],
+  name: 'Programming',
+  emojii: '🕊️',
+  emojiis: ['👨‍💻','🪶','☁️','⚡'],
   accentColor: '#8D0327',
   bot: {
-    name: 'Mr. Globbles',
-    email: 'happy@turkey.com',
-    password: 'HappyHolidays',
-    avatar: 'https://raw.githubusercontent.com/feathersjs/playground/20e1af6488bd1002f4b3918942dc52f97068a067/assets/holiday.svg'
+    name: 'Featherbot',
+    email: 'featherbot@feathersjs.com',
+    password: 'feathers rules',
+    avatar: 'https://raw.githubusercontent.com/feathersjs/feathers/ae85fa216f12f7ff5d15e7039640e27a09989ea4/docs/public/feathersjs.svg'
   }
 }
 
@@ -52,7 +52,7 @@ export const HolidayBot = async (app: Application) => {
   const uidField = app.service('users').id
   const bot = await users.create(HolidayAssets.bot)
   const userId = bot[uidField]
-  await sendMessage(userId, `Happy ${HolidayAssets.name} 🍂`)
+  await sendMessage(userId, `Happy ${HolidayAssets.name}!`)
 
   let lastMessage = 0
   app.on('login', async (authResult: any, {connection: conn}: any) => {
