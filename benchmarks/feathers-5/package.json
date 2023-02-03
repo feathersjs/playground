@@ -1,0 +1,25 @@
+{
+  "name": "benchmark-feathers-5-koa",
+  "version": "1.0.0",
+  "description": "Simple Feathers 5 + Koa REST and SocketIO API",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node feathers-5.ts",
+    "benchmark": "npm run benchmark:http && npm run benchmark:socketio",
+    "benchmark:http": "autocannon -l -H \"Content-Type=application/json\" -a 200000 -c 10 http://localhost:3034/todos/test",
+    "benchmark:socketio": "websocket-bench -a 10 -m 20000 -c 10 -g websocket-bench.js http://localhost:3034"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@feathersjs/feathers": "^5.0.0-pre.36",
+    "@feathersjs/koa": "^5.0.0-pre.36",
+    "@feathersjs/socketio": "^5.0.0-pre.36"
+  },
+  "devDependencies": {
+    "autocannon": "^7.10.0",
+    "ts-node": "^10.9.1",
+    "websocket-bench": "github:daffl/websocket-bench"
+  }
+}
