@@ -26,7 +26,7 @@
     "node": ">= 16"
   },
   "dependencies": {
-    "@feathersjs/authentication": "pre",
+    "@feathersjs/authentication": "v5.0.0-pre.34",
     "@feathersjs/authentication-local": "pre",
     "@feathersjs/client": "pre",
     "@feathersjs/configuration": "pre",
