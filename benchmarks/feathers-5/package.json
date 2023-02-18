@@ -13,11 +13,12 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@feathersjs/feathers": "^5.0.0-pre.36",
-    "@feathersjs/koa": "^5.0.0-pre.36",
-    "@feathersjs/socketio": "^5.0.0-pre.36"
+    "@feathersjs/feathers": "^5.0.0-pre.38",
+    "@feathersjs/koa": "^5.0.0-pre.38",
+    "@feathersjs/socketio": "^5.0.0-pre.38"
   },
   "devDependencies": {
+    "0x": "^5.4.1",
     "autocannon": "^7.10.0",
     "ts-node": "^10.9.1",
     "websocket-bench": "github:daffl/websocket-bench"
