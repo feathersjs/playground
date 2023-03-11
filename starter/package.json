@@ -13,7 +13,7 @@
     "build": "vite build --outDir dist/client",
     "start": "npx tsx server/index.ts",
     "update": "npx npm-check-updates -u",
-    "i": "ls node_modules &> /dev/null || npm i",
+    "i": "ls node_modules &> /dev/null || pnpm i || npm i",
     "force-checkout": "npx g4c checkout --force HEAD",
     "switch-to-javascript-mode": "npx typescript -p tsconfig.node.json"
   },
