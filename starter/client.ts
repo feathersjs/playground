@@ -1,14 +1,16 @@
 /// <reference types="vite/client" />
 
-import {default as feathers, socketio, authentication} from '@feathersjs/client'
+import feathers from '@feathersjs/feathers'
+import authentication from '@feathersjs/authentication-client'
+import socketio from '@feathersjs/socketio-client'
 import io from 'socket.io-client'
-import type {MessagesResult} from './api/services/messages/messages.schema.js'
-import type {UsersData} from './api/services/users/users.schema.js'
+import type { MessagesResult } from './api/services/messages/messages.schema.js'
+import type { UsersData } from './api/services/users/users.schema.js'
 
 // Establish a Socket.io connection
 const socket = io(import.meta.env.VITE_FV_URL, {
   transports: ['websocket'],
-  reconnectionDelay: import.meta.env.DEV ? 60 : 1000
+  reconnectionDelay: import.meta.env.DEV ? 60 : 1000,
 })
 // Initialize our Feathers client application through Socket.io
 const client = feathers()
@@ -16,11 +18,14 @@ client.configure(socketio(socket))
 client.configure(authentication())
 
 // UNSAFELY safely escape HTML
-const escape = (str: any) => str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+const escape = (str: any) =>
+  str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 const appEl = document.getElementById('app') as HTMLDivElement
 const store = {
-  holiday: import.meta.env.VITE_HOLIDAY ? JSON.parse(import.meta.env.VITE_HOLIDAY) : {}
+  holiday: import.meta.env.VITE_HOLIDAY
+    ? JSON.parse(import.meta.env.VITE_HOLIDAY)
+    : {},
 }
 const loginScreenHTML = `<main class="login container">
   <div class="row">
@@ -104,7 +109,9 @@ const addUser = (user: UsersData) => {
 
   // Update the number of users
   const userCount = document.querySelectorAll('.user-list li').length
-  const onlineEl = document.querySelector('.online-count') as HTMLParagraphElement
+  const onlineEl = document.querySelector(
+    '.online-count'
+  ) as HTMLParagraphElement
   onlineEl.innerText = '' + userCount
 }
 
@@ -128,12 +135,16 @@ const addMessage = (message: MessagesResult) => {
 
   // Escape HTML to prevent XSS attacks
   const text = message.userId === 0 ? message.text : escape(message.text) // task: use DOM instead
-  const dtf = new Intl.DateTimeFormat(undefined, {timeStyle: 'short'})
-  const prettyD = message.createdAt ? dtf.format(new Date(message.createdAt as string)) : ''
+  const dtf = new Intl.DateTimeFormat(undefined, { timeStyle: 'short' })
+  const prettyD = message.createdAt
+    ? dtf.format(new Date(message.createdAt as string))
+    : ''
 
   if (chat) {
     const img = `<img src="${user.avatar}" alt="${user.name}" class="avatar" crossorigin="anonymous">`
-    const userName = `<span class="username font-600">${escape(user.name || '')}</span>`
+    const userName = `<span class="username font-600">${escape(
+      user.name || ''
+    )}</span>`
     chat.innerHTML += `<div class="${messageId} message flex flex-row">${img}
       <div class="message-wrapper">
         <p class="message-header"> ${userName}
@@ -152,7 +163,10 @@ const addMessage = (message: MessagesResult) => {
 const showLogin = (error?: any) => {
   const headingEl = document.querySelector('.heading')
   if (document.querySelectorAll('.login').length && error && headingEl) {
-    headingEl.insertAdjacentHTML('beforeend', `<p>There was an error: ${error.message}</p>`)
+    headingEl.insertAdjacentHTML(
+      'beforeend',
+      `<p>There was an error: ${error.message}</p>`
+    )
   }
   appEl.innerHTML = loginScreenHTML
 }
@@ -164,9 +178,9 @@ const showChat = async () => {
   // Find the latest 25 messages. They will come with the newest first
   const messages = await client.service('messages').find({
     query: {
-      $sort: {createdAt: -1},
-      $limit: 25
-    }
+      $sort: { createdAt: -1 },
+      $limit: 25,
+    },
   })
 
   // We want to show the newest message last
@@ -181,16 +195,21 @@ const showChat = async () => {
 
 // Retrieve email/password object from the login/signup page
 const getCredentials = () => {
-  const defDev = {email: 'you@example.com', password: 'password'}
-  const dev = import.meta.env.DEV ? {...defDev, ...JSON.parse(import.meta.env.VITE_FV_DEV_USER || '')} : false
-  const email = document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
-  const password = document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
-  document.querySelector<HTMLInputElement>('[name="password"]')?.value || '' + Math.random()
+  const defDev = { email: 'you@example.com', password: 'password' }
+  const dev = import.meta.env.DEV
+    ? { ...defDev, ...JSON.parse(import.meta.env.VITE_FV_DEV_USER || '') }
+    : false
+  const email =
+    document.querySelector<HTMLInputElement>('[name="email"]')?.value || ''
+  const password =
+    document.querySelector<HTMLInputElement>('[name="password"]')?.value || ''
+  document.querySelector<HTMLInputElement>('[name="password"]')?.value ||
+    '' + Math.random()
 
   if (dev) {
-    return {email: email || dev.email, password: password || dev.password}
+    return { email: email || dev.email, password: password || dev.password }
   } else {
-    return {email, password}
+    return { email, password }
   }
 }
 
@@ -201,7 +220,7 @@ const login = async (credentials?: any): Promise<boolean> => {
       // log in with the `local` strategy using the credentials we got
       await client.authenticate({
         strategy: 'local',
-        ...credentials
+        ...credentials,
       })
     } else {
       try {
@@ -246,7 +265,11 @@ const signup = async () => {
   }
 }
 
-const addEventListener = (selector: string, event: string, handler: Function) => {
+const addEventListener = (
+  selector: string,
+  event: string,
+  handler: Function
+) => {
   document.addEventListener(event, async (ev: any) => {
     if (ev?.target?.closest(selector)) {
       handler(ev)
@@ -278,7 +301,7 @@ addEventListener('#send-message', 'submit', async (ev: any) => {
 
   // Create a new message and then clear the input field
   await client.service('messages').create({
-    text: input.value
+    text: input.value,
   })
 
   input.value = ''
@@ -290,15 +313,19 @@ const main = async () => {
   client.service('messages').on('updated', addMessage)
   client.service('users').on('created', addUser)
 
-  store.holiday.accentColor && document.body.style.setProperty('--accent-color', store.holiday.accentColor)
+  store.holiday.accentColor &&
+    document.body.style.setProperty('--accent-color', store.holiday.accentColor)
 
   // - If DEV, login w jwt, login w dev user, or make dev user.
   // - else, login w jwt, or show login
-  if (import.meta.env.DEV && await login() === false && await login(getCredentials()) === false) {
-      await signup() // attempt to signup with dev creds
-  } else if (await login() === false) {
+  if (
+    import.meta.env.DEV &&
+    (await login()) === false &&
+    (await login(getCredentials())) === false
+  ) {
+    await signup() // attempt to signup with dev creds
+  } else if ((await login()) === false) {
     showLogin()
   }
-  
 }
 globalThis.addEventListener('DOMContentLoaded', main)
