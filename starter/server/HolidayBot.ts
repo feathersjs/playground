@@ -19,8 +19,8 @@ const getNext = (e: ArrayLike<string>): string => {
 
 export const HolidayAssets = {
   name: 'Programming',
-  emojii: '☘️',
-  emojiis: ['☘️','🪙','🌈','💰'],
+  emojii: '🍀',
+  emojiis: ['🍀','🪙','🌈','☘️'],
   accentColor: '#009E60',
   bot: {
     name: 'Lucky Leprechaun',
