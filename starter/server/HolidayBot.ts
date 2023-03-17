@@ -31,7 +31,7 @@ export const HolidayAssets = {
 }
 
 const HolidayMessages = [
-  '<a href="https://discord.gg/qa8kez8QBx">Happy St. Patrick's Day!</a>',
+  '<a href="https://discord.gg/qa8kez8QBx">Happy St. Patrick\'s Day!</a>',
   '<a href="https://discord.gg/qa8kez8QBx">Join our discord!</a>',
   '<a href="https://github.com/feathersjs/feathers">Star us on GitHub!</a>',
   '<a href="https://twitter.com/feathersjs">Follow us on Twitter!</a>',
