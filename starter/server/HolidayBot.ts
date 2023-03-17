@@ -30,6 +30,7 @@ export const HolidayAssets = {
   }
 }
 
+const greeting = "Ahoy!"
 const HolidayMessages = [
   '<a href="https://discord.gg/qa8kez8QBx">Happy St. Patrick\'s Day!</a>',
   '<a href="https://discord.gg/qa8kez8QBx">Join our discord!</a>',
@@ -61,7 +62,7 @@ export const HolidayBot = async (app: Application) => {
       // REST has no real-time connection
       if (lastMessage < Date.now() - 2 * 60 * 1000) {
         await sleep(1)
-        let text = `Gobble gobble, ${authResult.user.name}`
+        let text = `${greeting}, ${authResult.user.name}`
         await sendMessage(userId, text)
       }
 
