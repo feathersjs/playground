@@ -5,10 +5,17 @@ run = ["npm", "run", "start"]
 entrypoint = "README.md"
 
 [nix]
-channel = "stable-22_05"
+channel = "stable-22_11"
 
 [env]
+PATH = "/home/runner/$REPL_SLUG/.config/npm/node_global/bin:/home/runner/$REPL_SLUG/node_modules/.bin"
 npm_config_yes="true"
+HOSTNAME="0.0.0.0"
+NODE_OPTIONS="--max_old_space_size=384"
+
+# Enables Secrets and Repl Auth, without the erratic Replit packagers
+[packager]
+language = "bash"
 
 [languages.html]
 pattern = "**/*.html"
