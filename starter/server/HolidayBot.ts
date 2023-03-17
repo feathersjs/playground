@@ -19,23 +19,24 @@ const getNext = (e: ArrayLike<string>): string => {
 
 export const HolidayAssets = {
   name: 'Programming',
-  emojii: '🕊️',
-  emojiis: ['👨‍💻','🪶','☁️','⚡'],
-  accentColor: '#8D0327',
+  emojii: '☘️',
+  emojiis: ['☘️','🪙','🌈','💰'],
+  accentColor: '#009E60',
   bot: {
-    name: 'Featherbot',
+    name: 'Lucky Leprechaun',
     email: 'featherbot@feathersjs.com',
     password: 'feathers rules',
-    avatar: 'https://raw.githubusercontent.com/feathersjs/feathers/ae85fa216f12f7ff5d15e7039640e27a09989ea4/docs/public/feathersjs.svg'
+    avatar: 'https://raw.githubusercontent.com/feathersjs/playground/main/assets/holiday.svg'
   }
 }
 
 const HolidayMessages = [
+  '<a href="https://discord.gg/qa8kez8QBx">Happy St. Patrick's Day!</a>',
   '<a href="https://discord.gg/qa8kez8QBx">Join our discord!</a>',
   '<a href="https://github.com/feathersjs/feathers">Star us on GitHub!</a>',
   '<a href="https://twitter.com/feathersjs">Follow us on Twitter!</a>',
-  '<a href="https://dove.feathersjs.com/guides/basics/starting.html">Read our docs!</a>',
-  '<a href="https://dove.feathersjs.com/awesome/">Checkout our Awesome Feathers community packages!</a>',
+  '<a href="https://feathersjs.com/guides/basics/starting.html">Read our docs!</a>',
+  '<a href="https://feathersjs.com/awesome/">Checkout our Awesome Feathers community packages!</a>',
 ]
 
 const sendMessage = async (userId, fullText) => {
