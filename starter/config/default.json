@@ -15,7 +15,7 @@
     "jwtOptions": {
       "header": {
         "typ": "access"
-      ,
+      },
       "audience": "https://yourdomain.com",
       "issuer": "feathers",
       "algorithm": "none",
