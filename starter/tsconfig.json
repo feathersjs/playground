@@ -13,6 +13,6 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true
   },
-  "include": ["./client.ts","api/services/**/*.schema.ts","./env.d.ts"],
+  "include": ["./client.ts","src/services/**/*.schema.ts","./env.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
