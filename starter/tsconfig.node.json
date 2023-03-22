@@ -7,5 +7,5 @@
     "removeComments": false, // Remove if comfortable with TypeScript
     "outDir": "dist/server"
   },
-  "include": ["api/**/*", "test/**/*", "vite.config.ts"]
+  "include": ["src/**/*", "test/**/*", "vite.config.ts"]
 }

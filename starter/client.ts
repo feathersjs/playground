@@ -1,11 +1,11 @@
 /// <reference types="vite/client" />
 
-import feathers from '@feathersjs/feathers'
+import { feathers } from '@feathersjs/feathers'
 import authentication from '@feathersjs/authentication-client'
 import socketio from '@feathersjs/socketio-client'
 import io from 'socket.io-client'
-import type { MessagesResult } from './api/services/messages/messages.schema.js'
-import type { UsersData } from './api/services/users/users.schema.js'
+import type { MessagesResult } from './src/services/messages/messages.schema.js'
+import type { UsersData } from './src/services/users/users.schema.js'
 
 // Establish a Socket.io connection
 const socket = io(import.meta.env.VITE_FV_URL, {
