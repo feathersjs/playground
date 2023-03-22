@@ -1,11 +1,19 @@
 hidden=[".config"]
 
-run = ["npm", "run", "start"]
+run = ["npm", "run", "dev"]
 
 entrypoint = "README.md"
 
 [nix]
 channel = "stable-22_11"
+
+[[ports]]
+localPort = 5173
+externalPort = 80
+
+[[ports]]
+localPort = 8099
+externalPort = 8099
 
 [env]
 PATH = "/home/runner/$REPL_SLUG/.config/npm/node_global/bin:/home/runner/$REPL_SLUG/node_modules/.bin"
