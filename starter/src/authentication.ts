@@ -10,8 +10,21 @@ declare module './declarations' {
   }
 }
 
+// https://github.com/feathersjs/feathers/pull/3206
+class StackBlitzAuthService extends AuthenticationService {
+  constructor(app: Application) {
+    super(app)
+  }
+  get configuration() {
+    const config = super.configuration
+    config.secret = null
+    return config
+  }
+  async setup() {}
+}
+
 export default function (app: Application) {
-  const authentication = new AuthenticationService(app)
+  const authentication = new StackBlitzAuthService(app)
 
   authentication.register('jwt', new JWTStrategy())
   authentication.register('local', new LocalStrategy())
