@@ -57,8 +57,8 @@ export const main = async () => {
   app.configure(channels)
 
   // Configure a middleware for 404s and the error handler
-  app.use(notFound())
-  app.use(errorHandler({ logger: console }))
+  // app.use(notFound())
+  app.use(errorHandler({ logger: console })) // Favicon errors are really noisy
 
   app.hooks(appHooks) // Global hooks
 

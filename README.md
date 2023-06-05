@@ -1,17 +1,7 @@
 ## Feathers Playground
 
-<p align="center">
-  <a href="https://feathersjs.com" target="_blank" rel="noopener noreferrer">
-    <img width="180" src="https://raw.githubusercontent.com/feathersjs/feathers/2b89e0b7fceb42f92c9139f16f3291fa3ff560f1/docs/public/feathersjs.svg" alt="Feathers logo">
-  </a>
-</p>
-<br/>
-<p align="center">
-  <a href="https://stackblitz.com/fork/github/feathersjs/playground/tree/template-starter"><img src="https://developer.stackblitz.com/img/open_in_stackblitz.svg" alt="Open in StackBlitz"></a> 
-  <a href="https://pr.new/github.com/feathersjs/playground/tree/template-starter"><img src="https://developer.stackblitz.com/img/open_in_codeflow.svg" alt="Open in CodeFlow"></a>
-
-</p>
-<br/>
+[Open in StackBlitz](https://stackblitz.com/fork/github/feathersjs/playground/tree/main/starter)  
+[Open in CodeFlow](https://pr.new/github.com/feathersjs/playground)  
 
 A demo feathers-chat project for learning and demonstration purposes.
 

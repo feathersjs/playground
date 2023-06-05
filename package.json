@@ -1,12 +1,63 @@
 {
-  "name": "feathers-playground",
+  "name": "feathers-vite-chat",
+  "description": "A FeathersJS real-time chat application written in TypeScript",
   "version": "1.0.0",
-  "description": "Feathers 🕊️ starter",
+  "type": "module",
   "scripts": {
-    "dev": "cd starter && npm run dev",
-    "start": "cd starter && npm run i && npm run build && npm run start",
-    "code-stats": "npx code-stats starter/server starter/client.ts > code-stats.md"
+    "dev": "npm run i && vite",
+    "dev:client": "VITE_SSG=off vite",
+    "dev:server": "npx tsx watch --clear-screen=false server/index.ts",
+    "preview": "vite preview",
+    "test:server": "npx typescript --noEmit && npx vitest run",
+    "test:client": "npx typescript --noEmit",
+    "build": "vite build --outDir dist/client",
+    "start": "npx tsx server/index.ts",
+    "update": "npx npm-check-updates -u",
+    "i": "ls node_modules &> /dev/null || npm i",
+    "force-checkout": "npx g4c checkout --force HEAD",
+    "switch-to-javascript-mode": "npx typescript -p tsconfig.node.json"
   },
-  "license": "MIT",
-  "prettier": "@github/prettier-config"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feathersjs/playground.git",
+    "directory": "starter"
+  },
+  "engines": {
+    "node": ">= 16"
+  },
+  "dependencies": {
+    "@feathersjs/authentication": "5.0.1",
+    "@feathersjs/authentication-client": "5.0.1",
+    "@feathersjs/authentication-local": "5.0.1",
+    "@feathersjs/configuration": "5.0.1",
+    "@feathersjs/errors": "5.0.1",
+    "@feathersjs/express": "5.0.1",
+    "@feathersjs/feathers": "5.0.1",
+    "@feathersjs/schema": "5.0.1",
+    "@feathersjs/socketio": "5.0.1",
+    "@feathersjs/socketio-client": "5.0.1",
+    "feathers-database": "npm:@feathersjs/memory@5.0.1",
+    "helmet": "^5.1.0",
+    "socket.io-client": "^4.6.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/jsonwebtoken": "^8.5.8",
+    "feathers-vite": "~1.2.2",
+    "node-fetch": "^3.2.9",
+    "vite": "4.2.0"
+  },
+  "stackblitz": {
+    "installDependencies": false,
+    "startCommand": "npm run dev"
+  },
+  "prettier": {
+    "x-src": "@github/prettier-config",
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "bracketSpacing": false,
+    "trailingComma": "none",
+    "arrowParens": "avoid"
+  }
 }
