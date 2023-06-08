@@ -1,7 +1,0 @@
-node_modules
-
-# Replit adds this if it detects this is a TS repo
-/tsconfig.json
-
-# We want to stay ever green
-package-lock.json
