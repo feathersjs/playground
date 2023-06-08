@@ -13,7 +13,15 @@
 </p>
 <br/>
 
-A demo feathers-chat project for learning and demonstration purposes.
+Experimental projects for learning, research and demonstration purposes.
+
+For **documentation** and generating projects see [Feathers Docs](https://dove.feathersjs.com/).
+
+To see a full production app with oAuth, complete schemas, better TypeScript definitions, resolvers for all service events, SQL migrations, etc... Use 
+[Feathersjs/Feathers-Chat](https://github.com/feathersjs/feathers-chat)
+
+
+### [Feathers StackBlitz Starter](https://github.com/feathersjs/playground/tree/template-starter)
 
 This is a minimal project with:
 
@@ -25,12 +33,11 @@ This is a minimal project with:
 - Less than 500 of code total
 - 5 second cold boot times
 
-For **documentation** and generating projects see [Feathers Docs](https://dove.feathersjs.com/).
+### [Benchmarks](https://github.com/feathersjs/playground/tree/benchmarks)
 
-To see a full production app with oAuth, complete schemas, better TypeScript definitions, resolvers for all service events, SQL migrations, etc... Use 
-[Feathersjs/Feathers-Chat](https://github.com/feathersjs/feathers-chat)
+A performance tracking project with similar apps re-implemented in different frameworks.
 
-## Resources
+## Other Resources
 
 - [Join us on Discord](https://discord.gg/qa8kez8QBx)
 - [Join us on Twitter](https://twitter.com/feathersjs)
