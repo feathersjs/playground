@@ -4,8 +4,8 @@ import { feathers } from '@feathersjs/feathers'
 import authentication from '@feathersjs/authentication-client'
 import socketio from '@feathersjs/socketio-client'
 import io from 'socket.io-client'
-import type { MessagesResult } from './src/services/messages/messages.schema.js'
-import type { UsersData } from './src/services/users/users.schema.js'
+import type { MessagesResult } from './dist/server/messages/messages.schema.ts'
+import type { UsersData } from './dist/server/users/users.schema.ts'
 
 // Establish a Socket.io connection
 const socket = io(import.meta.env.VITE_FV_URL, {
