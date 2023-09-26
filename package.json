@@ -8,8 +8,8 @@
     "dev:client": "VITE_SSG=off vite",
     "dev:server": "npx tsx watch --clear-screen=false server/index.ts",
     "preview": "vite preview",
-    "test:server": "npx typescript --noEmit && npx vitest run",
-    "test:client": "npx typescript --noEmit",
+    "test:server": "npx tsc --noEmit && npx vitest run",
+    "test:client": "npx tsc --noEmit",
     "build": "tsc && vite build --outDir dist/client",
     "bundle:client": "tsc --declaration --outDir dist/server src/services/*/*.schema.ts",
     "install": "npm run bundle:client",
@@ -17,7 +17,7 @@
     "update": "npx npm-check-updates -u",
     "i": "ls node_modules &> /dev/null || npm i",
     "force-checkout": "npx g4c checkout --force HEAD",
-    "switch-to-javascript-mode": "npx typescript -p tsconfig.node.json"
+    "switch-to-javascript-mode": "npx tsc -p tsconfig.node.json"
   },
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
   "devDependencies": {
     "@types/cors": "^2.8.12",
     "@types/jsonwebtoken": "^8.5.8",
-    "feathers-vite": "~1.2.2",
+    "feathers-vite": "~1.2.7",
     "node-fetch": "^3.2.9",
     "typescript": "^5.1.3",
     "vite": "4.2.0"
