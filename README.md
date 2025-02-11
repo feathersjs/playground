@@ -43,3 +43,12 @@ A performance tracking project with similar apps re-implemented in different fra
 - [Join us on Twitter](https://twitter.com/feathersjs)
 - [Star us on GitHub](https://github.com/feathersjs/feathers)
 
+## 🌏  Open in Other Cloud IDEs
+
+Click any of the buttons below to start a new development environment to demo or contribute to the codebase without having to install anything on your machine:
+
+[![Open in Glitch](https://img.shields.io/badge/Open%20in-Glitch-blue?logo=glitch)](https://glitch.com/edit/#!/import/github/feathersjs/feathers-chat)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/feathersjs/feathers-chat)
+[![Open in CodeSandbox](https://img.shields.io/badge/Open%20in-CodeSandbox-blue?style=flat-square&logo=codesandbox)](https://githubbox.com/feathersjs/feathers-chat)
+[![Open in Codeanywhere](https://codeanywhere.com/img/open-in-codeanywhere-btn.svg)](https://app.codeanywhere.com/#https://github.com/feathersjs/feathers-chat)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/feathersjs/feathers-chat)
